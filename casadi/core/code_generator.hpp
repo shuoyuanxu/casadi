@@ -234,6 +234,24 @@ namespace casadi {
     /** \brief fmin */
     std::string fmin(const std::string& x, const std::string& y);
 
+    /** \brief vfmax */
+    std::string vfmax(const std::string& x, casadi_int n, const std::string& y);
+
+    /** \brief vfmin */
+    std::string vfmin(const std::string& x, casadi_int n, const std::string& y);
+
+    /** \brief vfmax */
+    std::string vfmax(const std::string& x, const std::string& n, const std::string& y);
+
+    /** \brief vfmin */
+    std::string vfmin(const std::string& x, const std::string& n, const std::string& y);
+
+    /** \brief max */
+    std::string max(const std::string& x, const std::string& y);
+
+    /** \brief min */
+    std::string min(const std::string& x, const std::string& y);
+
     /** \brief norm_inf */
     std::string norm_inf(casadi_int n, const std::string& x);
 
@@ -300,6 +318,8 @@ namespace casadi {
       AUX_FABS,
       AUX_MIN,
       AUX_MAX,
+      AUX_VFMIN,
+      AUX_VFMAX,
       AUX_MAX_VIOL,
       AUX_REGULARIZE
     };
