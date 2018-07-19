@@ -163,6 +163,12 @@ namespace casadi {
     /// Regularization
     bool regularize_;
 
+    /** \brief Generate code for the function body */
+    void codegen_body(CodeGenerator& g) const override;
+
+    /** \brief Generate code for the declarations of the C function */
+    void codegen_declarations(CodeGenerator& g) const override;
+
     /// Access Conic
     const Function getConic() const { return qpsol_;}
 
@@ -178,6 +184,13 @@ namespace casadi {
                           const double* lbx, const double* ubx,
                           const double* A, const double* lbA, const double* ubA,
                           double* x_opt, double* lambda_x_opt, double* lambda_A_opt) const;
+
+
+    // Solve the QP subproblem
+    void codegen_qp_solve(CodeGenerator& cg, const std::string& H, const std::string& g,
+              const std::string& lbx, const std::string& ubx,
+              const std::string& A, const std::string& lbA, const std::string& ubA,
+              const std::string& x_opt, const std::string& lambda_x_opt, const std::string& lambda_A_opt) const;
 
     /// A documentation string
     static const std::string meta_doc;

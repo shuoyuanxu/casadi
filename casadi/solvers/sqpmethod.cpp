@@ -227,37 +227,38 @@ namespace casadi {
     }
 
     // Current linearization point
-    alloc_w(nx_, true); // x_cand_
+    alloc_w("x_cand", nx_, true);
 
     // Lagrange gradient in the next iterate
-    alloc_w(nx_, true); // gLag_
-    alloc_w(nx_, true); // gLag_old_
+    alloc_w("gLag", nx_, true);
+    alloc_w("gLag_old", nx_, true);
 
     // Constraint function value
-    alloc_w(ng_, true); // g_cand_
+    alloc_w("g_cand", ng_, true);
 
     // Gradient of the objective
-    alloc_w(nx_, true); // gf_
+    alloc_w("gf", nx_, true);
 
     // Bounds of the QP
-    alloc_w(ng_, true); // qp_LBA
-    alloc_w(ng_, true); // qp_UBA
-    alloc_w(nx_, true); // qp_LBX
-    alloc_w(nx_, true); // qp_UBX
+    alloc_w("qp_LBA", ng_, true);
+    alloc_w("qp_UBA", ng_, true);
+    alloc_w("qp_LBX", nx_, true);
+    alloc_w("qp_UBX", nx_, true);
 
     // QP solution
-    alloc_w(nx_, true); // dx_
-    alloc_w(nx_, true); // qp_DUAL_X_
-    alloc_w(ng_, true); // qp_DUAL_A_
+    alloc_w("dx", nx_, true);
+    alloc_w("qp_DUAL_X", nx_, true);
+    alloc_w("qp_DUAL_A", ng_, true);
 
     // Hessian approximation
-    alloc_w(Hsp_.nnz(), true); // Bk_
+    alloc_w("Bk", Hsp_.nnz(), true);
 
     // Jacobian
-    alloc_w(Asp_.nnz(), true); // Jk_
+    alloc_w("Jk", Asp_.nnz(), true);
 
     // Line-search memory
-    alloc_w(merit_memsize_, true);
+    alloc_w("merit_mem", merit_memsize_, true);
+
   }
 
   void Sqpmethod::set_work(void* mem, const double**& arg, double**& res,
@@ -268,37 +269,37 @@ namespace casadi {
     Nlpsol::set_work(mem, arg, res, iw, w);
 
     // Current linearization point
-    m->x_cand = w; w += nx_;
+    m->x_cand = w_offset(w, "x_cand");
 
     // Lagrange gradient in the next iterate
-    m->gLag = w; w += nx_;
-    m->gLag_old = w; w += nx_;
+    m->gLag = w_offset(w, "gLag");
+    m->gLag_old = w_offset(w, "gLag_old");
 
     // Constraint function value
-    m->g_cand = w; w += ng_;
+    m->g_cand = w_offset(w, "g_cand");
 
     // Gradient of the objective
-    m->gf = w; w += nx_;
+    m->gf = w_offset(w, "gf");
 
     // Bounds of the QP
-    m->qp_LBA = w; w += ng_;
-    m->qp_UBA = w; w += ng_;
-    m->qp_LBX = w; w += nx_;
-    m->qp_UBX = w; w += nx_;
+    m->qp_LBA = w_offset(w, "qp_LBA");
+    m->qp_UBA = w_offset(w, "qp_UBA");
+    m->qp_LBX = w_offset(w, "qp_LBX");
+    m->qp_UBX = w_offset(w, "qp_UBX");
 
     // QP solution
-    m->dx = w; w += nx_;
-    m->qp_DUAL_X = w; w += nx_;
-    m->qp_DUAL_A = w; w += ng_;
+    m->dx = w_offset(w, "dx");
+    m->qp_DUAL_X = w_offset(w, "qp_DUAL_X");
+    m->qp_DUAL_A = w_offset(w, "qp_DUAL_A");
 
     // Hessian approximation
-    m->Bk = w; w += Hsp_.nnz();
+    m->Bk = w_offset(w, "Bk");
 
     // Jacobian
-    m->Jk = w; w += Asp_.nnz();
+    m->Jk = w_offset(w, "Jk");
 
     // merit_mem
-    m->merit_mem = w; w += merit_memsize_;
+    m->merit_mem = w_offset(w, "merit_mem");
 
     m->iter_count = -1;
   }
@@ -590,6 +591,194 @@ namespace casadi {
     // Solve the QP
     qpsol_(m->arg, m->res, m->iw, m->w, 0);
     if (verbose_) print("QP solved\n");
+  }
+
+  void Sqpmethod::codegen_declarations(CodeGenerator& g) const {
+    g.add_dependency(get_function("nlp_fg"));
+    g.add_dependency(get_function("nlp_jac_fg"));
+    if (exact_hessian_) g.add_dependency(get_function("nlp_hess_l"));
+    g.add_dependency(qpsol_);
+  }
+
+  void Sqpmethod::codegen_body(CodeGenerator& g) const {
+
+    // From nlpsol
+    g.local("m_p", "const casadi_real", "*");
+    g.init_local("m_p", "arg[" + str(NLPSOL_P) + "]");
+
+    g.local("m_lbx", "const casadi_real", "*");
+    g.init_local("m_lbx", "arg[" + str(NLPSOL_LBX) + "]");
+
+    g.local("m_ubx", "const casadi_real", "*");
+    g.init_local("m_ubx", "arg[" + str(NLPSOL_UBX) + "]");
+
+    g.local("m_lbg", "const casadi_real", "*");
+    g.init_local("m_lbg", "arg[" + str(NLPSOL_LBG) + "]");
+    
+    g.local("m_ubg", "const casadi_real", "*");
+    g.init_local("m_ubg", "arg[" + str(NLPSOL_UBG) + "]");
+    
+    g.local("m_f", "casadi_real");
+
+    g << g.copy("arg[" + str(NLPSOL_X0) + "]", nx_, "m_x") << "\n";
+    g << g.copy("arg[" + str(NLPSOL_LAM_X0) + "]", nx_, "m_lam_x") << "\n";
+    g << g.copy("arg[" + str(NLPSOL_LAM_G0) + "]", ng_, "m_lam_g") << "\n";
+
+    casadi_assert(max_iter_ls_==0, "Codegen implemented for full steps only.");
+    casadi_assert(exact_hessian_, "Codegen implemented for exact Hessian only.");
+
+    for (const auto& it : w_offsets()) {
+      g.local("m_" + it.first, "casadi_real", "*");
+      g.init_local("m_" + it.first, "w+" + str(it.second));
+    }
+
+    for (const auto& it : iw_offsets()) {
+      g.local("m_" + it.first, "casadi_int", "*");
+      g.init_local("m_" + it.first, "w+" + str(it.second));
+    }
+
+    g.local("m_w", "casadi_real", "*");
+    g.init_local("m_w", "w+" + str(w_offset()));
+
+    g.local("m_iw", "casadi_int", "*");
+    g.init_local("m_iw", "iw+" + str(iw_offset()));
+
+    g.local("m_arg", "const casadi_real", "**");
+    g.init_local("m_arg", "arg+" + str(NLPSOL_NUM_IN));
+
+    g.local("m_res", "casadi_real", "**");
+    g.init_local("m_res", "res+" + str(NLPSOL_NUM_OUT));
+
+    g.local("iter_count", "casadi_int");
+    g.init_local("iter_count", "0");
+    if (regularize_) {
+      g.local("reg", "casadi_real");
+      g.init_local("reg", "0");
+    }
+    g.local("one", "const casadi_real");
+    g.init_local("one", "1");
+
+
+    g.comment("MAIN OPTIMIZATION LOOP");
+    g << "while (1) {\n";
+    g.comment("Evaluate f, g and first order derivative information");
+    g << "m_arg[0] = m_x;\n";
+    g << "m_arg[1] = m_p;\n";
+    g << "m_res[0] = &m_f;\n";
+    g << "m_res[1] = m_gf;\n";
+    g << "m_res[2] = m_g;\n";
+    g << "m_res[3] = m_Jk;\n";
+
+    std::string nlp_jac_fg = g.add_dependency(get_function("nlp_jac_fg"));
+
+    g << nlp_jac_fg + "(m_arg, m_res, m_iw, m_w, 0);\n";
+
+    g.comment("Evaluate the gradient of the Lagrangian");
+    g << g.copy("m_gf", nx_, "m_gLag") << "\n";
+    g << g.mv("m_Jk", Asp_, "m_lam_g", "m_gLag", true) << "\n";
+    g << g.axpy(nx_, "1.0", "m_lam_x", "m_gLag") << "\n";
+
+    g.comment("Primal infeasability");
+    g.local("pr_inf", "casadi_real");
+    g << "pr_inf = " << g.fmax(g.max_viol(nx_, "m_x", "m_lbx", "m_ubx"), g.max_viol(ng_, "m_g", "m_lbg", "m_ubg")) << ";\n";
+    
+    g.comment("inf-norm of lagrange gradient");
+    g.local("gLag_norminf", "casadi_real");
+    g << "gLag_norminf = " << g.norm_inf(nx_, "m_gLag") << "\n";
+
+    g.comment("inf-norm of step");
+    g.local("dx_norminf", "casadi_real");
+    g << "dx_norminf = " << g.norm_inf(nx_, "m_dx") << "\n";
+
+    g.comment("Checking convergence criteria");
+    g << "if (iter_count >= " << min_iter_ << " && pr_inf < " << tol_pr_ << " && gLag_norminf < " << tol_du_ << ") break;\n";
+    g << "if (iter_count >= " << max_iter_ << ") break;\n";
+    g << "if (iter_count >= 1 && iter_count >= " << min_iter_ << " && dx_norminf <= " << min_step_size_ << ") break;\n";
+
+    g.comment("Update/reset exact Hessian");
+    g << "m_arg[0] = m_x;\n";
+    g << "m_arg[1] = m_p;\n";
+    g << "m_arg[2] = &one;\n";
+    g << "m_arg[3] = m_lam_g;\n";
+    g << "m_res[0] = m_Bk;\n";
+
+    std::string nlp_hess_l = g.add_dependency(get_function("nlp_hess_l"));
+
+    g << nlp_hess_l + "(m_arg, m_res, m_iw, m_w, 0);\n";
+    
+    g.comment("Determing regularization parameter with Gershgorin theorem");
+    if (regularize_) {
+      g << "reg = " << g.fmin(0, "-" + g.lb_eig(Hsp_, "m_Bk")) << "\n";
+      g << "if (reg>0) " << g.regularize(Hsp_, "m_Bk", "reg") << "\n";
+    }
+
+    g.comment("Formulate the QP");
+    g << g.copy("m_lbx", nx_, "m_qp_LBX") << "\n";
+    g << g.axpy(nx_, "-1.0", "m_x", "m_qp_LBX") << "\n";
+    g << "  " << g.copy("m_ubx", nx_, "m_qp_UBX") << "\n";
+    g << g.axpy(nx_, "-1.0", "m_x", "m_qp_UBX") << "\n";
+    g << g.copy("m_lbg", ng_, "m_qp_LBA") << "\n";
+    g << g.axpy(ng_, "-1.0", "m_g", "m_qp_LBA") << "\n";
+    g << g.copy("m_ubg", ng_, "m_qp_UBA") << "\n";
+    g << g.axpy(ng_, "-1.0", "m_g", "m_qp_UBA") << "\n";
+
+    g.comment("Initial guess");
+    g << g.copy("m_lam_x", nx_, "m_qp_DUAL_X") << "\n";
+    g << g.copy("m_lam_g", ng_, "m_qp_DUAL_A") << "\n";
+    g << g.fill("m_dx", nx_, "0.0") << "\n";
+
+
+    g.comment("Increase counter");
+    g << "iter_count++;\n";
+
+    g.comment("Solve the QP");
+    codegen_qp_solve(g, "m_Bk", "m_gf", "m_qp_LBX", "m_qp_UBX", "m_Jk", "m_qp_LBA",
+            "m_qp_UBA", "m_dx", "m_qp_DUAL_X", "m_qp_DUAL_A");
+
+    g.comment("Full step");
+    g << g.copy("m_qp_DUAL_A", ng_, "m_lam_g") << "\n";
+    g << g.copy("m_qp_DUAL_X", nx_, "m_lam_x") << "\n";
+
+    g.comment("Take step");
+    g << g.axpy(nx_, "1.0", "m_dx", "m_x") << "\n";
+
+    g << "}\n";
+
+    g << g.copy("m_x", nx_, "res[" + str(NLPSOL_X) + "]") << "\n";
+    g << g.copy("m_lam_x", nx_, "res[" + str(NLPSOL_LAM_X) + "]") << "\n";
+    g << g.copy("m_lam_g", ng_, "res[" + str(NLPSOL_LAM_G) + "]") << "\n";
+    g << g.copy("m_lam_p", np_, "res[" + str(NLPSOL_LAM_P) + "]") << "\n";
+    g << g.copy("&m_f", 1, "res[" + str(NLPSOL_F) + "]") << "\n";
+    g << g.copy("m_g", ng_, "res[" + str(NLPSOL_G) + "]") << "\n";
+
+  }
+
+
+  void Sqpmethod::codegen_qp_solve(CodeGenerator& cg, const std::string&  H, const std::string& g,
+              const std::string&  lbx, const std::string& ubx,
+              const std::string&  A, const std::string&  lbA, const std::string& ubA,
+              const std::string& x_opt, const std::string& lambda_x_opt, const std::string&  lambda_A_opt) const {
+
+    cg.local("i", "casadi_real");
+    for (casadi_int i=0;i<qpsol_.n_in();++i) cg << "m_arg[" << i << "] = 0;\n";
+    cg << "m_arg[" << CONIC_H << "] = " << H << ";\n";
+    cg << "m_arg[" << CONIC_G << "] = " << g << ";\n";
+    cg << "m_arg[" << CONIC_X0 << "] = " << x_opt << ";\n";
+    cg << "m_arg[" << CONIC_LAM_X0 << "] = " << lambda_x_opt << ";\n";
+    cg << "m_arg[" << CONIC_LAM_A0 << "] = " << lambda_A_opt << ";\n";
+    cg << "m_arg[" << CONIC_LBX << "] = " << lbx << ";\n";
+    cg << "m_arg[" << CONIC_UBX << "] = " << ubx << ";\n";
+    cg << "m_arg[" << CONIC_A << "] = " << A << ";\n";
+    cg << "m_arg[" << CONIC_LBA << "] = " << lbA << ";\n";
+    cg << "m_arg[" << CONIC_UBA << "] = " << ubA << ";\n";
+    for (casadi_int i=0;i<qpsol_.n_out();++i) cg << "m_res[" << i << "] = 0;\n";
+    cg << "m_res[" << CONIC_X << "] = " << x_opt << ";\n";
+    cg << "m_res[" << CONIC_LAM_X << "] = " << lambda_x_opt << ";\n";
+    cg << "m_res[" << CONIC_LAM_A << "] = " << lambda_A_opt << ";\n";
+
+    std::string qpsol = cg.add_dependency(qpsol_);
+
+    cg << qpsol << "(m_arg, m_res, m_iw, m_w, 0);\n";
   }
 
   Dict Sqpmethod::get_stats(void* mem) const {
