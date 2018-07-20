@@ -818,6 +818,11 @@ namespace casadi {
       add_auxiliary(AUX_FABS);
       add_auxiliary(AUX_FMIN);
       this->auxiliaries << sanitize_source(casadi_regularize_str, inst);
+    case AUX_BOUNDS_CONSISTENCY:
+      add_auxiliary(AUX_ISINF);
+      add_auxiliary(AUX_FMAX);
+      add_auxiliary(AUX_FMIN);
+      this->auxiliaries << sanitize_source(casadi_bound_consistency_str, inst);
     case AUX_TO_DOUBLE:
       this->auxiliaries << "#define casadi_to_double(x) "
                         << "(" << (this->cpp ? "static_cast<double>(x)" : "(double) x") << ")\n\n";
@@ -890,9 +895,20 @@ namespace casadi {
                         << "#endif\n"
                         << "}\n\n";
       break;
+    case AUX_ISINF:
+      shorthand("isinf");
+      this->auxiliaries << "casadi_real casadi_isinf(casadi_real x) {\n"
+                        << "/* Pre-c99 compatibility */\n"
+                        << "#if __STDC_VERSION__ < 199901L\n"
+                        << "  return x== INFINITY || x==-INFINITY;\n"
+                        << "#else\n"
+                        << "  return isinf(x);\n"
+                        << "#endif\n"
+                        << "}\n\n";
+      break;
     case AUX_MIN:
       this->auxiliaries << "casadi_int casadi_min(casadi_int x, casadi_int y) {\n"
-                        << "  return x>y ? x : y;\n"
+                        << "  return x>y ? y : x;\n"
                         << "}\n\n";
       break;
     case AUX_MAX:
@@ -1460,5 +1476,13 @@ namespace casadi {
     add_auxiliary(CodeGenerator::AUX_REGULARIZE);
     return "casadi_regularize(" + sparsity(sp_h) + ", " + h + ", " + reg + ");";
   }
+
+  std::string CodeGenerator::
+  bound_consistency(casadi_int n, const std::string& x,
+    const std::string& lam, const std::string& lbx, const std::string& ubx) {
+      add_auxiliary(CodeGenerator::AUX_BOUNDS_CONSISTENCY);
+      return "casadi_bound_consistency(" + str(n) + ", " + x + ", " + lam + ", " + lbx + ", " + ubx + ")";     
+    }
+
 
 } // namespace casadi

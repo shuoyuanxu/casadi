@@ -657,7 +657,7 @@ namespace casadi {
     if (max_iter_ls_) {
       g.local("merit_ind", "casadi_int");
       g.init_local("merit_ind", "0");
-      g.local("sigma", "casadi_int");
+      g.local("sigma", "casadi_real");
       g.init_local("sigma", "0.0");
       g.local("ls_iter", "casadi_int");
       g.init_local("ls_iter", "0");
@@ -701,15 +701,13 @@ namespace casadi {
     g.local("dx_norminf", "casadi_real");
     g << "dx_norminf = " << g.norm_inf(nx_, "m_dx") << ";\n";
 
-    //g << g.printf("\%ll %14.6e %9.2e %9.2e %9.2e \%ll\\n", {"iter_count", "m_f", "pr_inf", "gLag_norminf", "dx_norminf","ls_iter"}) << "\n";
-
     g.comment("Checking convergence criteria");
     g << "if (iter_count >= " << min_iter_ << " && pr_inf < " << tol_pr_ << " && gLag_norminf < " << tol_du_ << ") break;\n";
     g << "if (iter_count >= " << max_iter_ << ") break;\n";
     g << "if (iter_count >= 1 && iter_count >= " << min_iter_ << " && dx_norminf <= " << min_step_size_ << ") break;\n";
 
     g.comment("Update/reset exact Hessian");
-    g << "m_arg[0] = m_x;\n";
+    g << "m_arg[0] = m_x;\n"; 
     g << "m_arg[1] = m_p;\n";
     g << "m_arg[2] = &one;\n";
     g << "m_arg[3] = m_lam_g;\n";
@@ -748,15 +746,12 @@ namespace casadi {
     codegen_qp_solve(g, "m_Bk", "m_gf", "m_qp_LBX", "m_qp_UBX", "m_Jk", "m_qp_LBA",
             "m_qp_UBA", "m_dx", "m_qp_DUAL_X", "m_qp_DUAL_A");
 
-
     if (max_iter_ls_) {
       g.comment("Detecting indefiniteness");
-      //g.local("gain", "casadi_real");
-      //g << "gain = " << g.bilin("m_Bk", Hsp_, "m_dx", "m_dx") << ";\n";
-
+      
       g.comment("Calculate penalty parameter of merit function");
-      g << "sigma = " << g.fmax("sigma", "1.01*" + g.norm_inf(nx_, "m_qp_DUAL_X")) << "\n";
-      g << "sigma = " << g.fmax("sigma", "1.01*" + g.norm_inf(nx_, "m_qp_DUAL_A")) << "\n";
+      g << "sigma = " << g.fmax("sigma", "(1.01*" + g.norm_inf(nx_, "m_qp_DUAL_X")+")") << "\n";
+      g << "sigma = " << g.fmax("sigma", "(1.01*" + g.norm_inf(ng_, "m_qp_DUAL_A")+")") << "\n";
 
       g.comment("Calculate L1-merit function in the actual iterate");
       g.local("l1_infeas", "casadi_real");
@@ -869,6 +864,11 @@ namespace casadi {
 
       if (calc_lam_x_) g << g.scal(nx_, "-1.0", "m_lam_x") << "\n";
       if (calc_lam_p_) g << g.scal(np_, "-1.0", "m_lam_p") << "\n";
+    }
+
+    if (bound_consistency_) {
+      g << g.bound_consistency(nx_, "m_x", "m_lam_x", "m_lbx", "m_ubx") << ";\n";
+      g << g.bound_consistency(ng_, "m_g", "m_lam_g", "m_lbg", "m_ubg") << ";\n";
     }
 
     g << g.copy("m_x", nx_, "res[" + str(NLPSOL_X) + "]") << "\n";

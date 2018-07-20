@@ -197,6 +197,10 @@ namespace casadi {
     casadi_fill(x, n, alpha);
   }
 
+  template<typename T1>
+  void casadi_bound_consistency(casadi_int n, T1* x, T1* lam,
+                                 const T1* lbx, const T1* ubx);
+
   template <class T1>
   struct casadi_newton_mem;
 
@@ -254,6 +258,7 @@ namespace casadi {
   #include "casadi_bfgs.hpp"
   #include "casadi_regularize.hpp"
   #include "casadi_newton.hpp"
+  #include "casadi_bound_consistency.hpp"
 } // namespace casadi
 
 /// \endcond
