@@ -525,16 +525,20 @@ class casadiTestCase(unittest.TestCase):
       p = subprocess.Popen("gcc -pedantic -std=%s -fPIC -shared -Wall -Werror -Wextra -Wno-unknown-pragmas -Wno-long-long -Wno-unused-parameter -O3 %s.c -o %s.so" % (std,name,name) ,shell=True).wait()
       F2 = external(F.name(), './' + name + '.so')
 
+      print("nominal")
       Fout = F.call(inputs)
+      print("codegen")
       Fout2 = F2.call(inputs)
+      print(Fout)
+      print(Fout2)
 
       if isinstance(inputs, dict):
         self.assertEqual(F.name_out(), F2.name_out())
         for k in F.name_out():
-          self.checkarray(Fout[k],Fout2[k])
+          self.checkarray(Fout[k],Fout2[k],digits=15)
       else:
         for i in range(F.n_out()):
-          self.checkarray(Fout[i],Fout2[i])
+          self.checkarray(Fout[i],Fout2[i],digits=15)
 
       if self.check_serialize:
         self.check_serialize(F2,inputs=inputs)
