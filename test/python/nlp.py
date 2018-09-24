@@ -73,7 +73,6 @@ except:
   pass
 """
 
-@run_only(["IPOPTc"])
 class NLPtests(casadiTestCase):
   def test_iteration_interrupt(self):
    for Solver, solver_options, solver_features in solvers:

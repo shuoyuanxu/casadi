@@ -1483,7 +1483,8 @@ namespace casadi {
   bound_consistency(casadi_int n, const std::string& x,
     const std::string& lam, const std::string& lbx, const std::string& ubx) {
       add_auxiliary(CodeGenerator::AUX_BOUNDS_CONSISTENCY);
-      return "casadi_bound_consistency(" + str(n) + ", " + x + ", " + lam + ", " + lbx + ", " + ubx + ")";     
+      return "casadi_bound_consistency(" + str(n) + ", " + x + ", " + lam +
+             ", " + lbx + ", " + ubx + ")";
     }
 
 
