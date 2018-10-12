@@ -2456,7 +2456,7 @@ namespace casadi {
     // Print qpOASES error code, if any
     if (ret != qpOASES::SUCCESSFUL_RETURN && matricesChanged)
       print("***WARNING: qpOASES error message: \"%s\"\n",
-              qpOASES::getGlobalMessageHandler()->getErrorCodeMessage(ret));
+              qpOASES::MessageHandling::getErrorCodeMessage(ret));
 
     // Point Hessian again to the first Hessian
     m->hess = m->hess1;

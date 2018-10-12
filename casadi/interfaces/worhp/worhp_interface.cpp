@@ -293,7 +293,7 @@ namespace casadi {
       m->worhp_w.DG.nnz = 0;
     }
 
-    if (true /*m->worhp_w.HM.NeedStructure*/) { // not initialized
+    if (true /*m->worhp_w.HM.NeedStructure*/) { // not initialized // NOLINT
       m->worhp_w.HM.nnz = nx_ + hesslag_sp_.nnz_lower(true);
     } else {
       m->worhp_w.HM.nnz = 0;

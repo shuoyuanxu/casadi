@@ -461,14 +461,12 @@ namespace casadi {
     // Initialize
     bonmin.initialize(GetRawPtr(tminlp));
 
-    if (true) {
-      // Branch-and-bound
-      try {
-        Bab bb;
-        bb(bonmin);
-      } catch (CoinError& e) {
-        casadi_error("CoinError occured: " + to_str(e));
-      }
+    // Branch-and-bound
+    try {
+      Bab bb;
+      bb(bonmin);
+    } catch (CoinError& e) {
+      casadi_error("CoinError occured: " + to_str(e));
     }
 
     // Save results to outputs

@@ -2124,7 +2124,7 @@ namespace casadi {
     double w = ad_weight();
     if (enable_reverse_ &&
         jac_penalty_*(1-w)*static_cast<double>(nnz_out())<w*static_cast<double>(nfwd))
-      return true;
+      return true; // NOLINT
 
     return false;
   }
@@ -2140,7 +2140,7 @@ namespace casadi {
     double w = ad_weight();
     if ((enable_forward_ || enable_fd_) &&
         jac_penalty_*w*static_cast<double>(nnz_in())<(1-w)*static_cast<double>(nadj))
-      return true;
+      return true; // NOLINT
 
     return false;
   }

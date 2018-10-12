@@ -211,7 +211,7 @@ namespace casadi {
     }
 
     // False if there are still elements not accounted for
-    if (it!=v.end()) return false;
+    if (it!=v.end()) return false; // NOLINT
 
     // True if reached this point
     return true;
