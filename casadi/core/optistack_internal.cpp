@@ -939,7 +939,7 @@ OptiSol OptiNode::solve(bool accept_limit) {
       opts["iteration_callback"] = callback_;
     }
 
-    casadi_assert(solver_name_!="",
+    casadi_assert(!solver_name_.empty(),
       "You must call 'solver' on the Opti stack to select a solver. "
       "Suggestion: opti.solver('ipopt')");
 

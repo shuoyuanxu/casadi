@@ -548,12 +548,12 @@ namespace casadi {
         }
 
         // Evaluate symbolically
-        if (fseed.size()>0) {
+        if (!fseed.empty()) {
           casadi_assert_dev(aseed.empty());
           if (verbose_) casadi_message("Calling 'ad_forward'");
           static_cast<const DerivedType*>(this)->ad_forward(fseed, fsens);
           if (verbose_) casadi_message("Back from 'ad_forward'");
-        } else if (aseed.size()>0) {
+        } else if (!aseed.empty()) {
           casadi_assert_dev(fseed.empty());
           if (verbose_) casadi_message("Calling 'ad_reverse'");
           static_cast<const DerivedType*>(this)->ad_reverse(aseed, asens);

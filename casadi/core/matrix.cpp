@@ -1841,13 +1841,13 @@ namespace casadi {
   Matrix<Scalar>::diagsplit(const Matrix<Scalar>& x, const std::vector<casadi_int>& offset1,
                               const std::vector<casadi_int>& offset2) {
     // Consistency check
-    casadi_assert_dev(offset1.size()>=1);
+    casadi_assert_dev(!offset1.empty());
     casadi_assert_dev(offset1.front()==0);
     casadi_assert_dev(offset1.back()==x.size1());
     casadi_assert_dev(is_monotone(offset1));
 
     // Consistency check
-    casadi_assert_dev(offset2.size()>=1);
+    casadi_assert_dev(!offset2.empty());
     casadi_assert_dev(offset2.front()==0);
     casadi_assert_dev(offset2.back()==x.size2());
     casadi_assert_dev(is_monotone(offset2));
@@ -3785,7 +3785,7 @@ namespace casadi {
     }
 
     // Construct indent string
-    std::string indent = "";
+    std::string indent;
     for (casadi_int i=0;i<indent_level;++i) {
       indent += "  ";
     }
@@ -3822,7 +3822,7 @@ namespace casadi {
       }
     }
 
-    if (all_equal && d.size()>0) {
+    if (all_equal && !d.empty()) {
       // No need to export all individual nonzeros if they are all equal
       stream << indent << name << "_nz = ones(1, " << d.size() << ")*" << d[0] << ";" << std::endl;
     } else {

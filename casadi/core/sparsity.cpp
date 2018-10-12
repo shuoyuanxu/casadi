@@ -1481,7 +1481,7 @@ namespace casadi {
   std::vector<Sparsity> Sparsity::horzsplit(const Sparsity& x,
       const std::vector<casadi_int>& offset) {
     // Consistency check
-    casadi_assert_dev(offset.size()>=1);
+    casadi_assert_dev(!offset.empty());
     casadi_assert_dev(offset.front()==0);
     casadi_assert(offset.back()==x.size2(),
                           "horzsplit(Sparsity, std::vector<casadi_int>): Last elements of offset "
@@ -1547,7 +1547,7 @@ namespace casadi {
                                             const std::vector<casadi_int>& offset1,
                                             const std::vector<casadi_int>& offset2) {
     // Consistency check
-    casadi_assert_dev(offset1.size()>=1);
+    casadi_assert_dev(!offset1.empty());
     casadi_assert_dev(offset1.front()==0);
     casadi_assert(offset1.back()==x.size1(),
                           "diagsplit(Sparsity, offset1, offset2): Last elements of offset1 "
@@ -1776,7 +1776,7 @@ namespace casadi {
   std::set<std::string> Sparsity::file_formats = {"mtx"};
 
   std::string Sparsity::file_format(const std::string& filename, const std::string& format_hint) {
-    if (format_hint=="") {
+    if (format_hint.empty()) {
       std::string extension = filename.substr(filename.rfind(".")+1);
       auto it = file_formats.find(extension);
       casadi_assert(it!=file_formats.end(),

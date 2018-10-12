@@ -50,7 +50,7 @@ namespace casadi {
                        const Dict& opts) {
 
     // Dimension at least 1
-    casadi_assert(grid.size()>0, "At least one input required");
+    casadi_assert(!grid.empty(), "At least one input required");
 
     // Consistency check, number of elements
     casadi_uint nel=1;
@@ -59,7 +59,7 @@ namespace casadi {
       nel *= g.size();
     }
     casadi_assert(values.size() % nel== 0, "Inconsistent number of elements");
-    casadi_assert(values.size()>0, "Values cannot be empty");
+    casadi_assert(!values.empty(), "Values cannot be empty");
 
     // Grid must be strictly increasing
     for (auto&& g : grid) {
