@@ -548,7 +548,7 @@ namespace casadi {
         stream.clear();
         std::string s;
         stream >> s;
-        if (s.compare("inf") == 0)
+        if (s=="inf")
           val = std::numeric_limits<T>::infinity();
         else
           break;
@@ -572,7 +572,7 @@ namespace casadi {
           reader.clear();
           std::string s;
           reader >> s;
-          if (s.compare("inf") == 0)
+          if (s=="inf")
             val = std::numeric_limits<T>::infinity();
           else
             break;
