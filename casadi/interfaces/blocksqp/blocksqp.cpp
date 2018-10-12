@@ -677,7 +677,7 @@ namespace casadi {
 
     // Free existing memory, if any
     if (qp_init_) {
-      if (m->qp) delete m->qp;
+      delete m->qp;
       m->qp = nullptr;
     }
     if (!m->qp) {
@@ -948,7 +948,7 @@ namespace casadi {
   void Blocksqp::
   calcLagrangeGradient(BlocksqpMemory* m,
     const double* lam_x, const double* lam_g,
-    const double* grad_f, double *jacNz,
+    const double* grad_f, const double *jacNz,
     double* grad_lag, casadi_int flag) const {
 
     // Objective gradient
@@ -1002,10 +1002,7 @@ namespace casadi {
     m->cNorm  = lInfConstraintNorm(m, d_nlp->z, m->gk);
     m->cNormS = m->cNorm /(1.0 + casadi_norm_inf(nx_, d_nlp->z));
 
-    if (m->tol <= opttol_ && m->cNormS <= nlinfeastol_)
-      return true;
-    else
-      return false;
+    return m->tol <= opttol_ && m->cNormS <= nlinfeastol_;
   }
 
   void Blocksqp::printInfo(BlocksqpMemory* m) const {
@@ -2320,7 +2317,7 @@ namespace casadi {
 
     // Setup QProblem data
     if (matricesChanged) {
-      if (m->A) delete m->A;
+      delete m->A;
       m->A = nullptr;
       copy_vector(Asp_.colind(), m->colind);
       copy_vector(Asp_.row(), m->row);
@@ -2379,7 +2376,7 @@ namespace casadi {
         if (matricesChanged) {
           // Convert block-Hessian to sparse format
           convertHessian(m);
-          if (m->H) delete m->H;
+          delete m->H;
           m->H = nullptr;
           m->H = new qpOASES::SymSparseMat(nx_, nx_,
                                            m->hessIndRow, m->hessIndCol,
@@ -2833,10 +2830,10 @@ namespace casadi {
   }
 
   BlocksqpMemory::~BlocksqpMemory() {
-    if (qpoases_mem) delete qpoases_mem;
-    if (H) delete H;
-    if (A) delete A;
-    if (qp) delete qp;
+    delete qpoases_mem;
+    delete H;
+    delete A;
+    delete qp;
   }
 
   double Blocksqp::

@@ -567,7 +567,7 @@ namespace casadi {
   }
 
 
-  void bvec_or(bvec_t* s, bvec_t & r, casadi_int begin, casadi_int end) {
+  void bvec_or(const bvec_t* s, bvec_t & r, casadi_int begin, casadi_int end) {
     r = 0;
     for (casadi_int i=begin; i<end; ++i) r |= s[i];
   }
@@ -1841,13 +1841,13 @@ namespace casadi {
         sz_w = max(sz_w, static_cast<size_t>(s.size2())); // To be able to copy a row
       }
       sz_w += i_nnz + o_nnz;
-      g << g.array("casadi_real", "w", sz_w);
-      g << g.array("casadi_int", "iw", sz_iw());
+      g << CodeGenerator::array("casadi_real", "w", sz_w);
+      g << CodeGenerator::array("casadi_int", "iw", sz_iw());
       string fw = "w+" + str(i_nnz + o_nnz);
 
       // Copy inputs to buffers
       casadi_int offset=0;
-      g << g.array("const casadi_real*", "arg", n_in_, "{0}");
+      g << CodeGenerator::array("const casadi_real*", "arg", n_in_, "{0}");
 
       // Allocate output buffers
       g << "casadi_real* res[" << n_out_ << "] = {0};\n";
@@ -1904,8 +1904,8 @@ namespace casadi {
 
       // Work vectors and input and output buffers
       size_t nr = sz_w() + nnz_in() + nnz_out();
-      g << g.array("casadi_int", "iw", sz_iw())
-        << g.array("casadi_real", "w", nr);
+      g << CodeGenerator::array("casadi_int", "iw", sz_iw())
+        << CodeGenerator::array("casadi_real", "w", nr);
 
       // Input buffers
       g << "const casadi_real* arg[" << sz_arg() << "] = {";
@@ -2815,7 +2815,7 @@ namespace casadi {
     // Print buffer content
     if (n>=0) uout() << (buf_dyn ? buf_dyn : buf) << std::flush;
     // Cleanup
-    if (buf_dyn) delete[] buf_dyn;
+    delete[] buf_dyn;
     va_end(args);
     // Throw error if failure
     casadi_assert(n>=0, "Print failure while processing '" + string(fmt) + "'");

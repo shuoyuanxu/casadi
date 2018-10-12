@@ -349,7 +349,7 @@ namespace casadi {
     } else {
       ss << e.fileName() << ":" << e.lineNumber() << " method " << e.methodName()
          << " : assertion \'" << e.message() <<"\' failed.";
-      if (e.className()!="")
+      if (!e.className().empty())
         ss <<"Possible reason: "<< e.className();
     }
     return ss.str();
@@ -363,7 +363,7 @@ namespace casadi {
   */
   class BonMinMessageHandler : public CoinMessageHandler {
   public:
-    BonMinMessageHandler(): CoinMessageHandler() { }
+    BonMinMessageHandler() { }
     /// Core of the class: the method that directs the messages
     int print() override {
       uout() << messageBuffer_ << std::endl;

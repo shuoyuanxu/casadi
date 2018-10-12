@@ -178,13 +178,13 @@ private:
   Apply a function f to each element in a vector
   */
   template<class T>
-  std::vector<T> applymap(T (*f)(const T&), const std::vector<T>&);
+  std::vector<T> applymap(T (*f)(const T&), const std::vector<T>& comp);
 
   /**
   Apply a function f to each element in a vector
   */
   template<class T>
-  void applymap(void (*f)(T&), std::vector<T>&);
+  void applymap(void (*f)(T&), std::vector<T>& comp);
 #endif // SWIG
   /// \endcond
 

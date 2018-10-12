@@ -249,7 +249,7 @@ namespace casadi {
     casadi_copy(d.lam+nx_, na_, res[CONIC_LAM_A]);
     // Return
     if (verbose_) casadi_warning(m->return_status);
-    m->success = flag ? false : true;
+    m->success = flag == 0;
     return 0;
   }
 
