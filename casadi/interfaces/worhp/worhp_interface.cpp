@@ -89,7 +89,7 @@ namespace casadi {
     // Sort Worhp options
     casadi_int nopts = WorhpGetParamCount();
     for (auto&& op : worhp_opts) {
-      if (op.first===="qp") {
+      if (op.first=="qp") {
         qp_opts_ = op.second;
         continue;
       }

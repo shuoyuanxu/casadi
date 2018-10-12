@@ -120,7 +120,7 @@ namespace casadi {
   }
 
   bool XmlNode::checkName(const string& str) const {
-    return name_.compare(str) == 0;
+    return name_ == str;
   }
 
   void XmlNode::readString(const std::string& str, std::string& val) {
@@ -128,9 +128,9 @@ namespace casadi {
   }
 
   void XmlNode::readString(const std::string& str, bool& val) {
-    if (str.compare("true")==0)
+    if (str=="true")
       val = true;
-    else if (str.compare("false")==0)
+    else if (str=="false")
       val = false;
     else
       throw CasadiException("XML argument not true or false");

@@ -1122,7 +1122,7 @@ namespace casadi {
 
     // Check if keyword
     for (const char* kw : {"null", "jac", "hess"}) {
-      if (name.compare(kw)==0) return false;
+      if (name==kw) return false;
     }
 
     // Make sure that the first character is a letter
@@ -1192,7 +1192,7 @@ namespace casadi {
 
     // If name became a keyword, append 1
     for (const char* kw : {"null", "jac", "hess"}) {
-      if (ss.str().compare(kw)==0) ss << "1";
+      if (ss.str()==kw) ss << "1";
     }
 
     return ss.str();

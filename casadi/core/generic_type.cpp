@@ -451,7 +451,7 @@ namespace casadi {
 
   bool GenericType::operator!=(const GenericType& op2) const {
     if (is_string() && op2.is_string()) {
-      return to_string().compare(op2.to_string()) != 0;
+      return to_string() != op2.to_string();
     }
 
     if (is_int() && op2.is_int()) {
