@@ -1143,7 +1143,7 @@ void OptiNode::set_value_internal(const MX& x, const DM& v) {
 
   // Purge empty rows
   std::vector<casadi_int> filled_rows = sum2(J).get_row();
-  J = J(filled_rows, all);
+  J = J(filled_rows, all); // NOLINT(cppcoreguidelines-slicing)
 
   // Get rows and columns of the mapping
   std::vector<casadi_int> row, col;

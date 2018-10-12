@@ -42,8 +42,8 @@
 #include "external_impl.hpp"
 #include "bspline.hpp"
 
-#include <typeinfo>
 #include <cctype>
+#include <typeinfo>
 #ifdef WITH_DL
 #include <cstdlib>
 #include <ctime>
@@ -150,7 +150,7 @@ namespace casadi {
     }
   }
 
-  Options ProtoFunction::options_
+  const Options ProtoFunction::options_
   = {{},
      {{"verbose",
        {OT_BOOL,
@@ -158,7 +158,7 @@ namespace casadi {
       }
   };
 
-  Options FunctionInternal::options_
+  const Options FunctionInternal::options_
   = {{&ProtoFunction::options_},
       {{"ad_weight",
        {OT_DOUBLE,

@@ -177,7 +177,7 @@ namespace casadi {
     }
   }
 
-  Options SXFunction::options_
+  const Options SXFunction::options_
   = {{&FunctionInternal::options_},
      {{"default_in",
        {OT_DOUBLEVECTOR,

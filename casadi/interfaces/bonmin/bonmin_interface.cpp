@@ -64,7 +64,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options BonminInterface::options_
+  const Options BonminInterface::options_
   = {{&Nlpsol::options_},
      {{"pass_nonlinear_variables",
        {OT_BOOL,

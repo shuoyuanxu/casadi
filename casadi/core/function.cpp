@@ -34,9 +34,9 @@
 #include "jit_function.hpp"
 #include "serializing_stream.hpp"
 
-#include <typeinfo>
-#include <fstream>
 #include <cctype>
+#include <fstream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -437,7 +437,7 @@ namespace casadi {
     Function base = mapaccum(N, opts);
     std::vector<MX> base_in = base.mx_in();
     std::vector<MX> out = base(base_in);
-    out[0] = out[0](Slice(), range((N-1)*size2_out(0), N*size2_out(0)));
+    out[0] = out[0](Slice(), range((N-1)*size2_out(0), N*size2_out(0))); // NOLINT
     return Function("fold_"+name(), base_in, out, name_in(), name_out(), opts);
   }
   Function Function::mapaccum(casadi_int N, const Dict& opts) const {
@@ -613,7 +613,7 @@ namespace casadi {
       for (casadi_int i=0;i<n_in();++i) {
         MX arg = MX::sym("arg", repmat(sparsity_in(i), 1, n));
         ret_in.push_back(arg);
-        MX last_arg = arg(Slice(), range((n-1)*size2_in(i), n*size2_in(i)));
+        MX last_arg = arg(Slice(), range((n-1)*size2_in(i), n*size2_in(i))); // NOLINT
         base_in.push_back(horzcat(arg, repmat(last_arg, 1, rem)));
       }
       std::vector<MX> ret_out = base(base_in);

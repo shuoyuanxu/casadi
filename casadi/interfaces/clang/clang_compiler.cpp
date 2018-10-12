@@ -72,7 +72,7 @@ namespace casadi {
     if (context_) delete context_;
   }
 
-  Options ClangCompiler::options_
+  const Options ClangCompiler::options_
   = {{&ImporterInternal::options_},
      {{"include_path",
        {OT_STRING,

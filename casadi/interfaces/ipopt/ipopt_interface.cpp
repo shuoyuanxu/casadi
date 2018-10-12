@@ -65,7 +65,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options IpoptInterface::options_
+  const Options IpoptInterface::options_
   = {{&Nlpsol::options_},
      {{"pass_nonlinear_variables",
        {OT_BOOL,

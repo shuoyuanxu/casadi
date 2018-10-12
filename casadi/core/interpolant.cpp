@@ -124,7 +124,7 @@ namespace casadi {
 
   const std::string Interpolant::infix_ = "interpolant";
 
-  Options Interpolant::options_
+  const Options Interpolant::options_
   = {{&FunctionInternal::options_},
      {{"lookup_mode",
        {OT_STRINGVECTOR,

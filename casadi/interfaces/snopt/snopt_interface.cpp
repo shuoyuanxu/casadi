@@ -59,7 +59,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options SnoptInterface::options_
+  const Options SnoptInterface::options_
   = {{&Nlpsol::options_},
      {{"snopt",
        {OT_DICT,
@@ -138,7 +138,7 @@ namespace casadi {
     m_ = ng_;
 
     // Construct the linear objective row
-    IM d = mapping_gradF(Slice(0), Slice());
+    IM d = mapping_gradF(Slice(0), Slice()); // NOLINT(cppcoreguidelines-slicing)
 
     std::vector<casadi_int> ii = mapping_gradF.sparsity().get_col();
     for (casadi_int j = 0; j < nnObj_; ++j) {

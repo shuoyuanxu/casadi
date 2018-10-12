@@ -53,7 +53,7 @@ namespace casadi {
   MXFunction::~MXFunction() {
   }
 
-  Options MXFunction::options_
+  const Options MXFunction::options_
   = {{&FunctionInternal::options_},
      {{"default_in",
        {OT_DOUBLEVECTOR,

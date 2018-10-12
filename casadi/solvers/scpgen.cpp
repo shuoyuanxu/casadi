@@ -59,7 +59,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options Scpgen::options_
+  const Options Scpgen::options_
   = {{&Nlpsol::options_},
      {{"qpsol",
        {OT_STRING,

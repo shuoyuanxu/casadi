@@ -27,9 +27,9 @@
 #define CASADI_SX_NODE_HPP
 
 #include <iostream>
-#include <string>
-#include <sstream>
 #include <math.h>
+#include <sstream>
+#include <string>
 
 /** \brief  Scalar expression (which also works as a smart pointer class to this class) */
 #include "sx_elem.hpp"

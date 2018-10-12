@@ -58,7 +58,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options WorhpInterface::options_
+  const Options WorhpInterface::options_
   = {{&Nlpsol::options_},
      {{"worhp",
        {OT_DICT,

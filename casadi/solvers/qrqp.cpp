@@ -54,7 +54,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options Qrqp::options_
+  const Options Qrqp::options_
   = {{&Conic::options_},
      {{"max_iter",
        {OT_INT,

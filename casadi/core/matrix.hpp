@@ -34,9 +34,9 @@
 #include "generic_expression.hpp"
 #include "printable.hpp"
 
-#include <vector>
-#include <typeinfo>
 #include <random>
+#include <typeinfo>
+#include <vector>
 
 namespace casadi {
 

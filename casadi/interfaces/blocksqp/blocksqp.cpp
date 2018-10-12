@@ -56,7 +56,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options Blocksqp::options_
+  const Options Blocksqp::options_
   = {{&Nlpsol::options_},
      {{"qpsol",
        {OT_STRING,
@@ -2347,7 +2347,7 @@ namespace casadi {
 
     // Other variables for qpOASES
     double cpuTime = matricesChanged ? max_time_qp_ : 0.1*max_time_qp_;
-    int maxIt = matricesChanged ? max_it_qp_ : 0.1*max_it_qp_;
+    int maxIt = matricesChanged ? max_it_qp_ : static_cast<int>(0.1*max_it_qp_);
     qpOASES::SolutionAnalysis solAna;
     qpOASES::returnValue ret = qpOASES::RET_INFO_UNDEFINED;
 
@@ -2403,7 +2403,7 @@ namespace casadi {
               }
           } else {
             // Second order correction: H and A do not change
-            maxIt = 0.1*max_it_qp_;
+            maxIt = static_cast<int>(0.1*max_it_qp_);
             cpuTime = 0.1*max_time_qp_;
             ret = m->qp->hotstart(g, lb, lu, lbA, luA, maxIt, &cpuTime);
           }

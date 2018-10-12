@@ -1061,7 +1061,7 @@ namespace casadi {
     std::vector<casadi_int> rrc = complement(rr, size1());
     std::vector<casadi_int> ccc = complement(cc, size2());
 
-    Matrix<Scalar> ret = (*this)(rrc, ccc);
+    Matrix<Scalar> ret = (*this)(rrc, ccc); // NOLINT(cppcoreguidelines-slicing)
 
     operator=(ret);
 
@@ -1987,7 +1987,7 @@ namespace casadi {
       for (casadi_int j=0; j<i; ++j) {
 
         // Get the j-th column of Q
-        Matrix<Scalar> qj = Q(Slice(), j);
+        Matrix<Scalar> qj = Q(Slice(), j); // NOLINT(cppcoreguidelines-slicing)
 
         ri(j, 0) = mtimes(qi.T(), qj); // Modified Gram-Schmidt
         // ri[j] = dot(qj, ai); // Classical Gram-Schmidt
@@ -2050,7 +2050,7 @@ namespace casadi {
     casadi_assert(m>=n, "nullspace(): expecting a flat matrix (more columns than rows), "
                           "but got " + str(X.dim()) + ".");
 
-    Matrix<Scalar> seed = DM::eye(m)(Slice(0, m), Slice(n, m));
+    Matrix<Scalar> seed = DM::eye(m)(Slice(0, m), Slice(n, m)); // NOLINT(cppcoreguidelines-slicing)
 
     std::vector< Matrix<Scalar> > us;
     std::vector< Matrix<Scalar> > betas;
@@ -2058,7 +2058,7 @@ namespace casadi {
     Matrix<Scalar> beta;
 
     for (casadi_int i=0;i<n;++i) {
-      Matrix<Scalar> x = X(i, Slice(i, m));
+      Matrix<Scalar> x = X(i, Slice(i, m)); // NOLINT(cppcoreguidelines-slicing)
       Matrix<Scalar> u = Matrix<Scalar>(x);
       Matrix<Scalar> sigma = sqrt(sum2(x*x));
       const Matrix<Scalar>& x0 = x(0, 0);
@@ -2187,7 +2187,7 @@ namespace casadi {
         inv_colperm[colperm[k]] = k;
 
       // Permute back the solution and return
-      Matrix<Scalar> x = xperm(inv_colperm, Slice());
+      Matrix<Scalar> x = xperm(inv_colperm, Slice()); // NOLINT(cppcoreguidelines-slicing)
       return x;
     }
   }
@@ -3686,8 +3686,8 @@ namespace casadi {
       SX poly = SX::vertcat({1, f/2, ((f*f -4*h)/16), -g*g/64});
       SX y = poly_roots(poly);
 
-      SX r0 = y(0);
-      SX r1 = y(2);
+      SX r0 = y(0); // NOLINT(cppcoreguidelines-slicing)
+      SX r1 = y(2); // NOLINT(cppcoreguidelines-slicing)
 
       SX p = sqrt(r0); // two non-zero-roots
       SX q = sqrt(r1);

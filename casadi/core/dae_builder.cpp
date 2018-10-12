@@ -25,12 +25,12 @@
 
 #include "dae_builder.hpp"
 
+#include <cctype>
+#include <ctime>
 #include <map>
 #include <set>
-#include <string>
 #include <sstream>
-#include <ctime>
-#include <cctype>
+#include <string>
 
 #include "casadi_misc.hpp"
 #include "exception.hpp"
@@ -766,7 +766,7 @@ namespace casadi {
       vector<MX> fb(this->dae.begin()+rowblock[b], this->dae.begin()+rowblock[b+1]);
 
       // Get local Jacobian
-      MX Jb = J(Slice(rowblock[b], rowblock[b+1]), Slice(colblock[b], colblock[b+1]));
+      MX Jb = J(Slice(rowblock[b], rowblock[b+1]), Slice(colblock[b], colblock[b+1])); // NOLINT
 
       // If Jb depends on xb, then the state derivative does not enter linearly
       // in the ODE and we cannot solve for the state derivative

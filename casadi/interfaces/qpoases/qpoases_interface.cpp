@@ -68,7 +68,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options QpoasesInterface::options_
+  const Options QpoasesInterface::options_
   = {{&Conic::options_},
      {{"sparse",
        {OT_BOOL,

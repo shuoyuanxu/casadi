@@ -64,7 +64,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options OoqpInterface::options_
+  const Options OoqpInterface::options_
   = {{&Conic::options_},
      {{"print_level",
        {OT_INT,

@@ -47,7 +47,7 @@ namespace casadi {
   }
 
   const XmlNode& XmlNode::operator[](casadi_int i) const {
-    return const_cast<XmlNode*>(this)->operator[](i);
+    return const_cast<XmlNode*>(this)->operator[](i); // NOLINT
   }
 
   bool XmlNode::hasChild(const string& childname) const {
@@ -69,7 +69,7 @@ namespace casadi {
   }
 
   const XmlNode& XmlNode::operator[](const string& childname) const {
-    return const_cast<XmlNode*>(this)->operator[](childname);
+    return const_cast<XmlNode*>(this)->operator[](childname); // NOLINT
   }
 
   void XmlNode::set_attribute(const string& attribute_name, const string& attribute) {

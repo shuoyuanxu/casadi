@@ -54,7 +54,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options LinsolQr::options_
+  const Options LinsolQr::options_
   = {{&LinsolInternal::options_},
      {{"eps",
        {OT_DOUBLE,

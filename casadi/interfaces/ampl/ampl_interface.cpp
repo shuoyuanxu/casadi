@@ -56,7 +56,7 @@ namespace casadi {
     clear_mem();
   }
 
-  Options AmplInterface::options_
+  const Options AmplInterface::options_
   = {{&Nlpsol::options_},
      {{"solver",
        {OT_STRING,
