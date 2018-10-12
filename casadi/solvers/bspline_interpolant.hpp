@@ -119,7 +119,7 @@ namespace casadi {
     FittingAlgorithm algorithm_;
     double smooth_linear_frac_;
 
-    static std::vector<double> greville_points(const std::vector<double>& x, casadi_int degree);
+    static std::vector<double> greville_points(const std::vector<double>& x, casadi_int deg);
 
     void serialize_body(SerializingStream &s) const override;
 
@@ -128,7 +128,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit BSplineInterpolant(DeserializingStream& e);
+    explicit BSplineInterpolant(DeserializingStream& s);
   };
 
 

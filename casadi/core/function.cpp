@@ -1149,10 +1149,10 @@ namespace casadi {
     return deserialize(s);
   }
 
-  Function Function::load(const std::string& s) {
-    std::ifstream stream(s, ios_base::binary | std::ios::in);
+  Function Function::load(const std::string& filename) {
+    std::ifstream stream(filename, ios_base::binary | std::ios::in);
     if ((stream.rdstate() & std::ifstream::failbit) != 0) {
-      casadi_error("Could not open file '" + s + "'.");
+      casadi_error("Could not open file '" + filename + "'.");
     }
     return deserialize(stream);
   }
@@ -1336,17 +1336,17 @@ namespace casadi {
     }
   }
 
-  const SX Function::sx_in(casadi_int ind) const {
+  const SX Function::sx_in(casadi_int iind) const {
     try {
-      return (*this)->sx_in(ind);
+      return (*this)->sx_in(iind);
     } catch (exception& e) {
       THROW_ERROR("sx_in", e.what());
     }
   }
 
-  const SX Function::sx_out(casadi_int ind) const {
+  const SX Function::sx_out(casadi_int oind) const {
     try {
-      return (*this)->sx_out(ind);
+      return (*this)->sx_out(oind);
     } catch (exception& e) {
       THROW_ERROR("sx_out", e.what());
     }

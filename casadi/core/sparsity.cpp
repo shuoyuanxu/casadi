@@ -376,14 +376,14 @@ namespace casadi {
   }
 
   Sparsity Sparsity::combine(const Sparsity& y, bool f0x_is_zero,
-                                    bool function0_is_zero,
+                                    bool fx0_is_zero,
                                     std::vector<unsigned char>& mapping) const {
-    return (*this)->combine(y, f0x_is_zero, function0_is_zero, mapping);
+    return (*this)->combine(y, f0x_is_zero, fx0_is_zero, mapping);
   }
 
   Sparsity Sparsity::combine(const Sparsity& y, bool f0x_is_zero,
-                                    bool function0_is_zero) const {
-    return (*this)->combine(y, f0x_is_zero, function0_is_zero);
+                                    bool fx0_is_zero) const {
+    return (*this)->combine(y, f0x_is_zero, fx0_is_zero);
   }
 
   Sparsity Sparsity::unite(const Sparsity& y, std::vector<unsigned char>& mapping) const {
@@ -676,8 +676,8 @@ namespace casadi {
     return (*this)->dfs(j, top, xi, pstack, pinv, marked);
   }
 
-  casadi_int Sparsity::scc(std::vector<casadi_int>& p, std::vector<casadi_int>& r) const {
-    return (*this)->scc(p, r);
+  casadi_int Sparsity::scc(std::vector<casadi_int>& index, std::vector<casadi_int>& offset) const {
+    return (*this)->scc(index, offset);
   }
 
   std::vector<casadi_int> Sparsity::amd() const {
@@ -1883,7 +1883,7 @@ namespace casadi {
   Sparsity Sparsity::deserialize(DeserializingStream& s) {
     std::vector<casadi_int> i;
     s.unpack("SparsityInternal::compressed", i);
-    if (i.size()==0) {
+    if (i.empty()) {
       return Sparsity();
     } else {
       return Sparsity::compressed(i);

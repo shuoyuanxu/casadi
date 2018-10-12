@@ -169,7 +169,7 @@ namespace casadi {
     };
 
     /// SDP to SOCP conversion initialization
-    void sdp_to_socp_init(SDPToSOCPMem& m) const;
+    void sdp_to_socp_init(SDPToSOCPMem& mem) const;
 
     void serialize(SerializingStream &s, const SDPToSOCPMem& m) const;
     void deserialize(DeserializingStream &s, SDPToSOCPMem& m);

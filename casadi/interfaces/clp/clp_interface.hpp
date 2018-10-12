@@ -127,7 +127,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit ClpInterface(DeserializingStream& e);
+    explicit ClpInterface(DeserializingStream& s);
 
   private:
     // Conversion of string to enum for options

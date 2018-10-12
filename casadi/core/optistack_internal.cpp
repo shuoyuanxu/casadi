@@ -174,7 +174,7 @@ std::string OptiNode::describe(const MX& expr, casadi_int indent) const {
       }
     } else {
       std::vector<MX> s = symvar(expr);
-      if (s.size()==0) {
+      if (s.empty()) {
         description+= "Constant epxression.";
       } else {
         description+= "General expression, dependent on " + str(s.size()) + " symbols:";

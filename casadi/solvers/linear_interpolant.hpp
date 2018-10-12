@@ -115,7 +115,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit LinearInterpolant(DeserializingStream& e);
+    explicit LinearInterpolant(DeserializingStream& s);
   };
 
   /** First order derivatives */

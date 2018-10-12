@@ -121,7 +121,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit Qrqp(DeserializingStream& e);
+    explicit Qrqp(DeserializingStream& s);
 
   private:
     void set_qp_prob();

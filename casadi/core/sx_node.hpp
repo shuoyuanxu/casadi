@@ -119,7 +119,7 @@ namespace casadi {
     void mark() const;
 
     /** \brief Non-recursive delete */
-    static void safe_delete(SXNode* node);
+    static void safe_delete(SXNode* n);
 
     // Depth when checking equalities
     static casadi_int eq_depth_;

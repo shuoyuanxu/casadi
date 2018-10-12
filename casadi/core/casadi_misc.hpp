@@ -449,7 +449,7 @@ namespace casadi {
 
   template<typename T>
   bool in_range(const std::vector<T> &v, casadi_int lower, casadi_int upper) {
-    if (v.size()==0) return true;
+    if (v.empty()) return true;
     casadi_int max = *std::max_element(v.begin(), v.end());
     if (max >= upper) return false;
     casadi_int min = *std::min_element(v.begin(), v.end());
@@ -464,7 +464,7 @@ namespace casadi {
 
   template<typename T>
   bool is_increasing(const std::vector<T> &v) {
-    if (v.size()==0) return true;
+    if (v.empty()) return true;
     T el = v[0];
     for (casadi_int i=1;i<v.size();++i) {
       if (!(v[i] > el)) return false;
@@ -475,7 +475,7 @@ namespace casadi {
 
   template<typename T>
   bool is_decreasing(const std::vector<T> &v) {
-    if (v.size()==0) return true;
+    if (v.empty()) return true;
     T el = v[0];
     for (casadi_int i=1;i<v.size();++i) {
       if (!(v[i] < el)) return false;
@@ -486,7 +486,7 @@ namespace casadi {
 
   template<typename T>
   bool is_nonincreasing(const std::vector<T> &v) {
-    if (v.size()==0) return true;
+    if (v.empty()) return true;
     T el = v[0];
     for (casadi_int i=1;i<v.size();++i) {
       if (!(v[i] <= el)) return false;
@@ -497,7 +497,7 @@ namespace casadi {
 
   template<typename T>
   bool is_nondecreasing(const std::vector<T> &v) {
-    if (v.size()==0) return true;
+    if (v.empty()) return true;
     T el = v[0];
     for (casadi_int i=1;i<v.size();++i) {
       if (!(v[i] >= el)) return false;

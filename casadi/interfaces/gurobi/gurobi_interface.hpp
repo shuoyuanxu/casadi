@@ -132,7 +132,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit GurobiInterface(DeserializingStream& e);
+    explicit GurobiInterface(DeserializingStream& s);
   };
 
 } // namespace casadi

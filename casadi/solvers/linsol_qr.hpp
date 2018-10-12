@@ -112,7 +112,7 @@ namespace casadi {
 
   protected:
     /** \brief Deserializing constructor */
-    explicit LinsolQr(DeserializingStream& e);
+    explicit LinsolQr(DeserializingStream& s);
   };
 
 } // namespace casadi

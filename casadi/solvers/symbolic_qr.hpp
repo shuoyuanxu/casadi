@@ -129,7 +129,7 @@ namespace casadi {
 
   protected:
     /** \brief Deserializing constructor */
-    explicit SymbolicQr(DeserializingStream& e);
+    explicit SymbolicQr(DeserializingStream& s);
   };
 
 } // namespace casadi

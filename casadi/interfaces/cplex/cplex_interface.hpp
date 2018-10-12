@@ -179,7 +179,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit CplexInterface(DeserializingStream& e);
+    explicit CplexInterface(DeserializingStream& s);
   };
 } // end namespace casadi
 /// \endcond

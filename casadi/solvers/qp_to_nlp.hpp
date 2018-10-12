@@ -103,7 +103,7 @@ namespace casadi {
 
   protected:
      /** \brief Deserializing constructor */
-    explicit QpToNlp(DeserializingStream& e);
+    explicit QpToNlp(DeserializingStream& s);
   };
 
 } // namespace casadi
