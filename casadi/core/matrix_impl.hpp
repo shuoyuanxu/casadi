@@ -2703,33 +2703,6 @@ namespace casadi {
     return deserialize(ss);
   }
 
-  /// Implementation of Matrix::get_nonzeros (in public API)
-  template<typename Scalar>
-  template<typename A>
-  std::vector<A> Matrix<Scalar>::get_nonzeros() const {
-    std::vector<A> ret(nnz());
-    auto r = ret.begin();
-    for (auto&& e : nonzeros()) *r++ = static_cast<A>(e);
-    return ret;
-  }
-
-  /// Implementation of std::vector(Matrix) (in public API)
-  template<typename Scalar>
-  template<typename A>
-  Matrix<Scalar>::operator std::vector<A>() const {
-    // Get sparsity pattern
-    casadi_int size1 = this->size1(), size2 = this->size2();
-    const casadi_int *colind = this->colind(), *row = this->row();
-    // Copy the nonzeros
-    auto it = nonzeros().begin();
-    std::vector<A> ret(numel(), 0);
-    for (casadi_int cc=0; cc<size2; ++cc) {
-      for (casadi_int el=colind[cc]; el<colind[cc+1]; ++el) {
-        ret[row[el] + cc*size1] = static_cast<A>(*it++);
-      }
-    }
-    return ret;
-  }
 
 } // namespace casadi
 
