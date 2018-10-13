@@ -106,6 +106,12 @@
 %exception  casadi::ClangCompiler::plugin_name() const override {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
+%exception  casadi::Collocation::algebraic_state_init(const MX &x0, const MX &z0) const override {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
+%exception  casadi::Collocation::algebraic_state_output(const MX &Z) const override {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
 %exception  casadi::Collocation::class_name() const override {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
@@ -1174,6 +1180,12 @@
 %exception  casadi::ImporterInternal::to_text(const std::string &cmd, casadi_int ind=-1) const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
+%exception  casadi::Integrator::algebraic_state_init(const MX &x0, const MX &z0) const  {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
+%exception  casadi::Integrator::algebraic_state_output(const MX &Z) const  {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
 %exception  casadi::Integrator::aug_adj(casadi_int nadj) const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
@@ -1744,6 +1756,9 @@
 %exception  casadi::Nlpsol::class_name() const override {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
+%exception  casadi::Nlpsol::codegen_body(CodeGenerator &g) const override {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
 %exception  casadi::Nlpsol::disp_more(std::ostream &stream) const override {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
@@ -1987,7 +2002,7 @@
 %exception  casadi::Qrsqp::print_iteration() const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
-%exception  casadi::Qrsqp::print_iteration(casadi_int iter, double obj, double pr_inf, double du_inf, double dx_norm, double reg, casadi_int ls_trials, bool ls_success) const  {
+%exception  casadi::Qrsqp::print_iteration(casadi_int iter, double obj, double pr_inf, double du_inf, double dx_norm, double rg, casadi_int ls_trials, bool ls_success) const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
 %exception  casadi::Rootfinder::ad_forward(const std::vector< MX > &arg, const std::vector< MX > &res, const std::vector< std::vector< MX > > &fseed, std::vector< std::vector< MX > > &fsens, bool always_inline, bool never_inline) const  {
@@ -2102,9 +2117,6 @@
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
 %exception  casadi::SX::op() const  {
- CATCH_OR_NOT(INTERNAL_MSG() $action) 
-}
-%exception  casadi::SX::print_split(std::vector< std::string > &output_nz, std::vector< std::string > &output_inter) const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
 %exception  casadi::SX::reset_input() const  {
@@ -2248,6 +2260,15 @@
 %exception  casadi::Sqpmethod::class_name() const override {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
+%exception  casadi::Sqpmethod::codegen_body(CodeGenerator &g) const override {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
+%exception  casadi::Sqpmethod::codegen_declarations(CodeGenerator &g) const override {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
+%exception  casadi::Sqpmethod::codegen_qp_solve(CodeGenerator &cg, const std::string &H, const std::string &g, const std::string &lbdz, const std::string &ubdz, const std::string &A, const std::string &x_opt, const std::string &dlam) const  {
+ CATCH_OR_NOT(INTERNAL_MSG() $action) 
+}
 %exception  casadi::Sqpmethod::getConic() const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
@@ -2263,7 +2284,7 @@
 %exception  casadi::Sqpmethod::print_iteration() const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
-%exception  casadi::Sqpmethod::print_iteration(casadi_int iter, double obj, double pr_inf, double du_inf, double dx_norm, double reg, casadi_int ls_trials, bool ls_success) const  {
+%exception  casadi::Sqpmethod::print_iteration(casadi_int iter, double obj, double pr_inf, double du_inf, double dx_norm, double rg, casadi_int ls_trials, bool ls_success) const  {
  CATCH_OR_NOT(INTERNAL_MSG() $action) 
 }
 %exception  casadi::Sqpmethod::serialize_body(SerializingStream &s) const override {
