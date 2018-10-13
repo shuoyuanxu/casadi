@@ -22,17 +22,54 @@
  *
  */
 
-#ifndef CASADI_SX_HPP
-#define CASADI_SX_HPP
+#ifndef CASADI_DM_DECL_HPP
+#define CASADI_DM_DECL_HPP
 
-#include "sx_decl.hpp"
-
-/// \cond INTERNAL
+#include "dm_fwd.hpp"
+#include "matrix_decl.hpp"
 
 namespace casadi {
 
+
+  template<>
+  DM DM::
+  solve(const DM& A, const DM& b,
+        const std::string& lsolver, const Dict& dict);
+
+  template<>
+  DM DM::
+  inv(const DM& A,
+        const std::string& lsolver, const Dict& dict);
+  template<>
+  DM DM::
+  pinv(const DM& A, const std::string& lsolver,
+       const Dict& dict);
+
+  template<>
+  CASADI_EXPORT DM DM::
+  rand(const Sparsity& sp);
+
+  template<>
+  DM DM::
+  expm(const DM& A);
+
+  template<>
+  DM DM::
+  expm_const(const DM& A, const DM& t);
+
+  template<> void DM::export_code(const std::string& lang,
+       std::ostream &stream, const Dict& options) const;
+
+  template<>
+  Dict CASADI_EXPORT DM::info() const;
+
+  template<>
+  void CASADI_EXPORT DM::to_file(const std::string& filename, const std::string& format_hint) const;
+
+#ifndef CASADI_DM_INSTANTIATOR_CPP 
+  extern template class Matrix<double>;
+#endif // CASADI_DM_INSTANTIATOR_CPP
+
 } // namespace casadi
 
-/// \endcond
-
-#endif // CASADI_SX_HPP
+#endif // CASADI_DM_DECL_HPP
