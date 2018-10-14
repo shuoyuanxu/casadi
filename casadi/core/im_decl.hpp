@@ -32,7 +32,7 @@ using namespace std;
 
 namespace casadi {
  
-   /// Is the IM a Slice
+  /// Is the IM a Slice
   bool CASADI_EXPORT is_slice(const IM& x, bool ind1=false);
 
   ///  Convert IM to Slice
