@@ -33,6 +33,7 @@ using namespace std;
 
 namespace casadi {
  
+  /**
   // Template specializations
   template<>
   CASADI_EXPORT Matrix<double> Matrix<double>::
@@ -89,6 +90,7 @@ namespace casadi {
 
   template<>
   void DM::to_file(const std::string& filename, const std::string& format_hint) const;
+*/
 
 #ifndef CASADI_DM_INSTANTIATOR_CPP 
   extern template class Matrix<double>;

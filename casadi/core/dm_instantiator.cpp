@@ -69,15 +69,15 @@ namespace casadi {
 
   template<>
   Matrix<double> Matrix<double>::
-  expm_const(const Matrix<double>& A, const Matrix<double>& t) {
-    return expm(A*t);
+  expm(const Matrix<double>& A) {
+    Function ret = expmsol("mysolver", "slicot", A.sparsity());
+    return ret(std::vector<DM>{A, 1})[0];
   }
 
   template<>
   Matrix<double> Matrix<double>::
-  expm(const Matrix<double>& A) {
-    Function ret = expmsol("mysolver", "slicot", A.sparsity());
-    return ret(std::vector<DM>{A, 1})[0];
+  expm_const(const Matrix<double>& A, const Matrix<double>& t) {
+    return expm(A*t);
   }
 
   template<> void DM::export_code(const std::string& lang,

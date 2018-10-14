@@ -38,11 +38,6 @@ namespace casadi {
   ///  Convert IM to Slice
   Slice CASADI_EXPORT to_slice(const IM& x, bool ind1=false);
 
-  template<>
-  Dict IM::info() const;
-  template<>
-  void IM::to_file(const std::string& filename, const std::string& format_hint) const;
-
 #ifndef CASADI_IM_INSTANTIATOR_CPP 
   extern template class Matrix<casadi_int>;
 #endif // CASADI_IM_INSTANTIATOR_CPP

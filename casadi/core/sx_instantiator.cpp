@@ -30,160 +30,6 @@ using namespace std;
 namespace casadi {
 
   template<>
-  bool SX::__nonzero__() const;
-
-  template<>
-  void SX::set_max_depth(casadi_int eq_depth);
-
-  template<>
-  casadi_int SX::get_max_depth();
-
-  template<>
-  SX SX::_sym(const string& name, const Sparsity& sp);
-
-  template<>
-  bool SX::is_regular() const;
-
-  template<>
-  bool SX::is_smooth() const;
-
-  template<>
-  casadi_int SX::element_hash() const;
-
-  template<>
-  bool SX::is_leaf() const;
-
-  template<>
-  bool SX::is_commutative() const;
-
-  template<>
-  bool SX::is_symbolic() const;
-
-  template<>
-  casadi_int SX::op() const;
-
-  template<>
-  bool SX::is_op(casadi_int op) const;
-
-  template<>
-  bool SX::is_valid_input() const;
-
-  template<> bool SX::has_duplicates() const;
-
-  template<> void SX::reset_input() const;
-
-  template<>
-  string SX::name() const;
-
-  template<>
-  SX SX::dep(casadi_int ch) const;
-
-  template<>
-  casadi_int SX::n_dep() const;
-
-  template<>
-  void SX::expand(const SX& ex2, SX& ww, SX& tt);
-
-  template<>
-  SX SX::pw_const(const SX& t, const SX& tval, const SX& val);
-
-  template<>
-  SX SX::pw_lin(const SX& t, const SX& tval, const SX& val);
-
-  template<>
-  SX SX::gauss_quadrature(const SX& f, const SX& x, const SX& a, const SX& b, casadi_int order,
-                          const SX& w);
-
-  template<>
-  SX SX::simplify(const SX& x);
-
-  template<>
-  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef);
-
-  template<>
-  vector<SX>
-  SX::substitute(const vector<SX>& ex, const vector<SX>& v, const vector<SX>& vdef);
-
-  template<>
-  void SX::substitute_inplace(const vector<SX >& v, vector<SX >& vdef,
-                             vector<SX >& ex, bool reverse);
-
-  template<>
-  bool SX::depends_on(const SX &x, const SX &arg);
-
-  template<>
-  SX SX::jacobian(const SX &f, const SX &x, const Dict& opts);
-
-  template<>
-  SX SX::hessian(const SX &ex, const SX &arg);
-
-  template<>
-  SX SX::hessian(const SX &ex, const SX &arg, SX &g);
-  template<>
-  std::vector<std::vector<SX> >
-  SX::forward(const std::vector<SX> &ex, const std::vector<SX> &arg,
-          const std::vector<std::vector<SX> > &v, const Dict& opts);
-
-  template<>
-  std::vector<std::vector<SX> >
-  SX::reverse(const std::vector<SX> &ex, const std::vector<SX> &arg,
-          const std::vector<std::vector<SX> > &v, const Dict& opts);
-
-  template<>
-  std::vector<bool> SX::which_depends(const SX &expr, const SX &var, casadi_int order, bool tr);
-
-  template<>
-  SX SX::taylor(const SX& f, const SX& x,
-                const SX& a, casadi_int order);
-
-  template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order);
-
-  template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
-                 const vector<casadi_int>& order_contributions);
-
-  template<>
-  casadi_int SX::n_nodes(const SX& x);
-
-  template<>
-  string
-  SX::print_operator(const SX& X, const vector<string>& args);
-
-  template<>
-  vector<SX> SX::symvar(const SX& x);
-
-  template<>
-  void SX::shared(vector<SX >& ex,
-                         vector<SX >& v_sx,
-                         vector<SX >& vdef_sx,
-                         const string& v_prefix,
-                         const string& v_suffix);
-
-  template<>
-  SX SX::poly_coeff(const SX& ex, const SX& x);
-
-  template<>
-  SX SX::poly_roots(const SX& p);
-
-  template<>
-  SX SX::eig_symbolic(const SX& m);
-
-  template<>
-  void SX::print_split(casadi_int nnz, const SXElem* nonzeros, vector<string>& nz,
-                      vector<string>& inter);
-
-  template<> vector<SX> SX::get_input(const Function& f);
-
-  template<> vector<SX> SX::get_free(const Function& f);
-
-  template<>
-  Dict SX::info() const;
-
-  template<>
-  void SX::to_file(const std::string& filename, const std::string& format_hint) const;
-
-  template<>
   bool SX::__nonzero__() const {
     casadi_assert(numel()==1,
       "Only scalar Matrix could have a truth value, but you "
@@ -291,6 +137,15 @@ namespace casadi {
   }
 
   template<>
+  bool SX::is_valid_input() const {
+    for (casadi_int k=0; k<nnz(); ++k) // loop over non-zero elements
+      if (!nonzeros().at(k)->is_symbolic()) // if an element is not symbolic
+        return false;
+
+    return true;
+  }
+
+  template<>
   bool SX::is_symbolic() const {
     if (is_dense()) {
       return is_valid_input();
@@ -307,15 +162,6 @@ namespace casadi {
   template<>
   bool SX::is_op(casadi_int op) const {
     return scalar().is_op(op);
-  }
-
-  template<>
-  bool SX::is_valid_input() const {
-    for (casadi_int k=0; k<nnz(); ++k) // loop over non-zero elements
-      if (!nonzeros().at(k)->is_symbolic()) // if an element is not symbolic
-        return false;
-
-    return true;
   }
 
   template<> bool SX::has_duplicates() const {
@@ -579,11 +425,6 @@ namespace casadi {
   }
 
   template<>
-  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
-    return substitute(vector<SX>{ex}, vector<SX>{v}, vector<SX>{vdef}).front();
-  }
-
-  template<>
   vector<SX>
   SX::substitute(const vector<SX>& ex, const vector<SX>& v, const vector<SX>& vdef) {
 
@@ -623,6 +464,11 @@ namespace casadi {
     // Otherwise, evaluate symbolically
     Function F("tmp", v, ex);
     return F(vdef);
+  }
+
+  template<>
+  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
+    return substitute(vector<SX>{ex}, vector<SX>{v}, vector<SX>{vdef}).front();
   }
 
   template<>
@@ -728,15 +574,15 @@ namespace casadi {
   }
 
   template<>
-  SX SX::hessian(const SX &ex, const SX &arg) {
-    SX g;
-    return hessian(ex, arg, g);
-  }
-
-  template<>
   SX SX::hessian(const SX &ex, const SX &arg, SX &g) {
     g = gradient(ex, arg);
     return jacobian(g, arg, {{"symmetric", true}});
+  }
+
+  template<>
+  SX SX::hessian(const SX &ex, const SX &arg) {
+    SX g;
+    return hessian(ex, arg, g);
   }
 
   template<>
@@ -835,11 +681,6 @@ namespace casadi {
   }
 
   template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
-    return mtaylor(f, x, a, order, vector<casadi_int>(x.nnz(), 1));
-  }
-
-  template<>
   SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
                  const vector<casadi_int>& order_contributions) {
     casadi_assert(f.nnz()==f.numel() && x.nnz()==x.numel(),
@@ -853,6 +694,11 @@ namespace casadi {
     return reshape(mtaylor_recursive(vec(f), x, a, order,
                                      order_contributions),
                    f.size2(), f.size1()).T();
+  }
+
+  template<>
+  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
+    return mtaylor(f, x, a, order, vector<casadi_int>(x.nnz(), 1));
   }
 
   template<>
