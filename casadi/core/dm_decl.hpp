@@ -29,8 +29,6 @@
 #include "dm_fwd.hpp"
 #include "matrix_decl.hpp"
 
-using namespace std;
-
 namespace casadi {
  
   // Template specializations
@@ -58,15 +56,15 @@ namespace casadi {
   template<>
   Matrix<double> Matrix<double>::
   solve(const Matrix<double>& A, const Matrix<double>& b,
-        const string& lsolver, const Dict& dict);
+        const std::string& lsolver, const Dict& dict);
 
   template<>
   Matrix<double> Matrix<double>::
   inv(const Matrix<double>& A,
-        const string& lsolver, const Dict& dict);
+        const std::string& lsolver, const Dict& dict);
   template<>
   Matrix<double> Matrix<double>::
-  pinv(const Matrix<double>& A, const string& lsolver,
+  pinv(const Matrix<double>& A, const std::string& lsolver,
        const Dict& dict);
 
   template<>

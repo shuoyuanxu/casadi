@@ -35,8 +35,6 @@
 #include "expm.hpp"
 #include "serializing_stream.hpp"
 
-using namespace std;
-
 namespace casadi {
   template<typename Scalar>
   void Matrix<Scalar>::set_precision(casadi_int precision) { stream_precision_ = precision; }
@@ -113,11 +111,11 @@ namespace casadi {
       return get(m, ind1, to_slice(rr, ind1), to_slice(cc, ind1));
     }
 
-    // Make sure dense vectors
+    // Make sure dense std::vectors
     casadi_assert(rr.is_dense() && rr.is_vector(),
-                          "Marix::get: First index must be a dense vector");
+                          "Marix::get: First index must be a dense std::vector");
     casadi_assert(cc.is_dense() && cc.is_vector(),
-                          "Marix::get: Second index must be a dense vector");
+                          "Marix::get: Second index must be a dense std::vector");
 
     // Get the sparsity pattern - does bounds checking
     std::vector<casadi_int> mapping;
@@ -162,7 +160,7 @@ namespace casadi {
     std::vector<casadi_int> mapping;
     Sparsity sp = sparsity().sub(rr.nonzeros(), rr.sparsity(), mapping, ind1);
 
-    // If indexed matrix was a row/column vector, make sure that the result is too
+    // If indexed matrix was a row/column std::vector, make sure that the result is too
     bool tr = (is_column() && rr.is_row()) || (is_row() && rr.is_column());
 
     // Copy nonzeros
@@ -220,21 +218,21 @@ namespace casadi {
       return set(m, ind1, to_slice(rr, ind1), to_slice(cc, ind1));
     }
 
-    // Row vector rr (e.g. in MATLAB) is transposed to column vector
+    // Row std::vector rr (e.g. in MATLAB) is transposed to column std::vector
     if (rr.size1()==1 && rr.size2()>1) {
       return set(m, ind1, rr.T(), cc);
     }
 
-    // Row vector cc (e.g. in MATLAB) is transposed to column vector
+    // Row std::vector cc (e.g. in MATLAB) is transposed to column std::vector
     if (cc.size1()==1 && cc.size2()>1) {
       return set(m, ind1, rr, cc.T());
     }
 
-    // Make sure rr and cc are dense vectors
+    // Make sure rr and cc are dense std::vectors
     casadi_assert(rr.is_dense() && rr.is_column(),
-                          "Matrix::set: First index not dense vector");
+                          "Matrix::set: First index not dense std::vector");
     casadi_assert(cc.is_dense() && cc.is_column(),
-                          "Matrix::set: Second index not dense vector");
+                          "Matrix::set: Second index not dense std::vector");
 
     // Assert dimensions of assigning matrix
     if (rr.size1() != m.size1() || cc.size1() != m.size2()) {
@@ -414,7 +412,7 @@ namespace casadi {
     // Check bounds
     casadi_assert_in_range(k, -sz+ind1, sz+ind1);
 
-    // If indexed matrix was a row/column vector, make sure that the result is too
+    // If indexed matrix was a row/column std::vector, make sure that the result is too
     bool tr = (is_column() && kk.is_row()) || (is_row() && kk.is_column());
 
     // Copy nonzeros
@@ -507,7 +505,7 @@ namespace casadi {
     const casadi_int* row = x.row();
     auto it = x.nonzeros().cbegin();
 
-    // New data vector
+    // New data std::vector
     std::vector<Scalar> d(nrow*ncol, val.scalar());
 
     // Copy nonzeros
@@ -622,7 +620,7 @@ namespace casadi {
 
   template<typename Scalar>
   void Matrix<Scalar>::print_vector(std::ostream &stream, bool truncate) const {
-    casadi_assert(is_column(), "Not a vector");
+    casadi_assert(is_column(), "Not a std::vector");
 
     // Get components
     std::vector<std::string> nz, inter;
@@ -648,7 +646,7 @@ namespace casadi {
     // Loop over rows
     stream << "[";
     for (casadi_int rr=0; rr<size1; ++rr) {
-      // String representation
+      // std::string representation
       std::string s = el<nnz && rr==row[el] ? nz.at(el++) : "00";
 
       // Truncate?
@@ -820,7 +818,7 @@ namespace casadi {
 
       // Loop over columns
       for (casadi_int cc=0; cc<size2; ++cc) {
-        // String representation of element
+        // std::string representation of element
         std::string s = ind[cc]<colind[cc+1] && row[ind[cc]]==rr
           ? nz.at(ind[cc]++) : "00";
 
@@ -918,7 +916,7 @@ namespace casadi {
         "Shape mismatch.\n"
         "Attempting to construct a matrix from a nested list.\n"
         "I got convinced that the desired size is (" + str(nrow) + " x " + str(ncol)
-        + " ), but now I encounter a vector of size (" + str(d[rr].size()) +  " )");
+        + " ), but now I encounter a std::vector of size (" + str(d[rr].size()) +  " )");
     }
 
     // Form matrix
@@ -954,7 +952,7 @@ namespace casadi {
       sparsity_(sp), nonzeros_(d) {
     casadi_assert(sp.nnz()==d.size(), "Size mismatch.\n"
                           "You supplied a sparsity of " + sp.dim()
-                          + ", but the supplied vector is of length " + str(d.size()));
+                          + ", but the supplied std::vector is of length " + str(d.size()));
   }
 
   template<typename Scalar>
@@ -969,7 +967,7 @@ namespace casadi {
         *this = Matrix<Scalar>(sp, densify(d).nonzeros(), false);
       }
     } else {
-      casadi_error("Matrix(Sparsity, Matrix): Only allowed for scalars and vectors");
+      casadi_error("Matrix(Sparsity, Matrix): Only allowed for scalars and std::vectors");
     }
   }
 
@@ -1039,7 +1037,7 @@ namespace casadi {
     for (casadi_int k=0; k<mapping.size(); ++k)
       nonzeros()[k] = nonzeros()[mapping[k]];
 
-    // Truncate nonzero vector
+    // Truncate nonzero std::vector
     nonzeros().resize(mapping.size());
   }
 
@@ -1052,7 +1050,7 @@ namespace casadi {
     for (casadi_int k=0; k<mapping.size(); ++k)
       nonzeros()[k] = nonzeros()[mapping[k]];
 
-    // Truncate nonzero vector
+    // Truncate nonzero std::vector
     nonzeros().resize(mapping.size());
   }
 
@@ -1912,7 +1910,7 @@ namespace casadi {
     if (x.is_vector()) {
       return norm_fro(x);
     } else {
-      casadi_error("2-norms currently only supported for vectors. "
+      casadi_error("2-norms currently only supported for std::vectors. "
                    "Did you intend to calculate a Frobenius norms (norm_fro)?");
     }
   }
@@ -1945,7 +1943,7 @@ namespace casadi {
     V = nan(spV);
     R = nan(spR);
     beta = nan(ncol, 1);
-    vector<Scalar> w(nrow_ext);
+    std::vector<Scalar> w(nrow_ext);
     casadi_qr(A.sparsity(), A.ptr(), get_ptr(w), spV, V.ptr(),
               spR, R.ptr(), beta.ptr(),
               get_ptr(prinv), get_ptr(pc));
@@ -1963,7 +1961,7 @@ namespace casadi {
     casadi_assert(r.size()==v.size(), "'r', 'v' dimension mismatch");
     casadi_assert(beta.is_vector() && beta.numel()==ncol, "'beta' has wrong dimension");
     casadi_assert(prinv.size()==r.size1(), "'pinv' has wrong dimension");
-    // Work vector
+    // Work std::vector
     std::vector<Scalar> w(nrow+ncol);
     // Return value
     Matrix<Scalar> x = densify(b);
@@ -2022,7 +2020,7 @@ namespace casadi {
     casadi_int n=A.size1();
 
     // Calculate entries in L and D
-    vector<Scalar> D_nz(n), L_nz(Lt_sp.nnz()), w(n);
+    std::vector<Scalar> D_nz(n), L_nz(Lt_sp.nnz()), w(n);
     casadi_ldl(A.sparsity(), get_ptr(A.nonzeros()), Lt_sp,
               get_ptr(L_nz), get_ptr(D_nz), get_ptr(p), get_ptr(w));
 
@@ -2314,8 +2312,8 @@ namespace casadi {
 
   template<typename Scalar>
   Matrix<Scalar> Matrix<Scalar>::polyval(const Matrix<Scalar>& p, const Matrix<Scalar>& x) {
-    casadi_assert(p.is_dense(), "polynomial coefficients vector must be dense");
-    casadi_assert(p.is_vector() && p.nnz()>0, "polynomial coefficients must be a vector");
+    casadi_assert(p.is_dense(), "polynomial coefficients std::vector must be dense");
+    casadi_assert(p.is_vector() && p.nnz()>0, "polynomial coefficients must be a std::vector");
     Matrix<Scalar> ret = x;
     for (auto&& e : ret.nonzeros()) {
       e = casadi_polyval(p.ptr(), p.numel()-1, e);
@@ -2329,7 +2327,7 @@ namespace casadi {
     casadi_assert(y.size1()==x.size2(), "Dimension error. Got " + x.dim()
                           + " times " + y.dim() + ".");
 
-    // Allocate work vectors
+    // Allocate work std::vectors
     std::vector<Scalar> dwork(x.size1());
     std::vector<casadi_int> iwork(x.size1()+1+y.size2());
 

@@ -28,8 +28,6 @@
 #include "im_fwd.hpp"
 #include "matrix_decl.hpp"
 
-using namespace std;
-
 namespace casadi {
  
    /// Is the IM a Slice

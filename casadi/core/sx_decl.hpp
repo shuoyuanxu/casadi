@@ -28,7 +28,6 @@
 #include "sx_fwd.hpp"
 #include "matrix_decl.hpp"
 
-using namespace std;
 
 namespace casadi {
  
@@ -42,7 +41,7 @@ namespace casadi {
   casadi_int SX::get_max_depth();
 
   template<>
-  SX SX::_sym(const string& name, const Sparsity& sp);
+  SX SX::_sym(const std::string& name, const Sparsity& sp);
 
   template<>
   bool SX::is_regular() const;
@@ -76,7 +75,7 @@ namespace casadi {
   template<> void SX::reset_input() const;
 
   template<>
-  string SX::name() const;
+  std::string SX::name() const;
 
   template<>
   SX SX::dep(casadi_int ch) const;
@@ -104,12 +103,12 @@ namespace casadi {
   SX SX::substitute(const SX& ex, const SX& v, const SX& vdef);
 
   template<>
-  vector<SX>
-  SX::substitute(const vector<SX>& ex, const vector<SX>& v, const vector<SX>& vdef);
+  std::vector<SX>
+  SX::substitute(const std::vector<SX>& ex, const std::vector<SX>& v, const std::vector<SX>& vdef);
 
   template<>
-  void SX::substitute_inplace(const vector<SX >& v, vector<SX >& vdef,
-                             vector<SX >& ex, bool reverse);
+  void SX::substitute_inplace(const std::vector<SX >& v, std::vector<SX >& vdef,
+                             std::vector<SX >& ex, bool reverse);
 
   template<>
   bool SX::depends_on(const SX &x, const SX &arg);
@@ -144,24 +143,24 @@ namespace casadi {
 
   template<>
   SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
-                 const vector<casadi_int>& order_contributions);
+                 const std::vector<casadi_int>& order_contributions);
 
   template<>
   casadi_int SX::n_nodes(const SX& x);
 
   template<>
-  string
-  SX::print_operator(const SX& X, const vector<string>& args);
+  std::string
+  SX::print_operator(const SX& X, const std::vector<std::string>& args);
 
   template<>
-  vector<SX> SX::symvar(const SX& x);
+  std::vector<SX> SX::symvar(const SX& x);
 
   template<>
-  void SX::shared(vector<SX >& ex,
-                         vector<SX >& v_sx,
-                         vector<SX >& vdef_sx,
-                         const string& v_prefix,
-                         const string& v_suffix);
+  void SX::shared(std::vector<SX >& ex,
+                         std::vector<SX >& v_sx,
+                         std::vector<SX >& vdef_sx,
+                         const std::string& v_prefix,
+                         const std::string& v_suffix);
 
   template<>
   SX SX::poly_coeff(const SX& ex, const SX& x);
@@ -173,12 +172,12 @@ namespace casadi {
   SX SX::eig_symbolic(const SX& m);
 
   template<>
-  void SX::print_split(casadi_int nnz, const SXElem* nonzeros, vector<string>& nz,
-                      vector<string>& inter);
+  void SX::print_split(casadi_int nnz, const SXElem* nonzeros, std::vector<std::string>& nz,
+                      std::vector<std::string>& inter);
 
-  template<> vector<SX> SX::get_input(const Function& f);
+  template<> std::vector<SX> SX::get_input(const Function& f);
 
-  template<> vector<SX> SX::get_free(const Function& f);
+  template<> std::vector<SX> SX::get_free(const Function& f);
 
   template<>
   Dict SX::info() const;
