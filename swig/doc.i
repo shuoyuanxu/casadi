@@ -46966,7 +46966,7 @@ primitive.
 */ %feature("docstring")  casadi::MatrixCommon::taylor(const MatrixCommon
 &ex, const MatrixCommon &x, const MatrixCommon &a, casadi_int order=1) "
 
-[INTERNAL]  univariate Taylor series expansion
+univariate Taylor series expansion
 
 Calculate the Taylor expansion of expression 'ex' up to order 'order' with
 respect to variable 'x' around the point 'a'
@@ -47108,7 +47108,7 @@ possible)
 %feature("docstring")  casadi::MatrixCommon::mtaylor(const MatrixCommon &ex,
 const MatrixCommon &x, const MatrixCommon &a, casadi_int order=1) "
 
-[INTERNAL]  multivariate Taylor series expansion
+multivariate Taylor series expansion
 
 Do Taylor expansions until the aggregated order of a term is equal to
 'order'. The aggregated order of $x^n y^m$ equals $n+m$.
@@ -47137,7 +47137,7 @@ Do Taylor expansions until the aggregated order of a term is equal to
 const MatrixCommon &x, const MatrixCommon &a, casadi_int order, const
 std::vector< casadi_int > &order_contributions) "
 
-[INTERNAL]  multivariate Taylor series expansion
+multivariate Taylor series expansion
 
 Do Taylor expansions until the aggregated order of a term is equal to
 'order'. The aggregated order of $x^n y^m$ equals $n+m$.
@@ -47372,8 +47372,8 @@ Get strings corresponding to the nonzeros and the interdependencies.
 
 %feature("docstring")  casadi::MatrixCommon::chol(const MatrixCommon &A) "
 
-[INTERNAL]  Obtain a Cholesky factorisation of a matrix Performs and LDL
-transformation [L,D] = ldl(A) and returns diag(sqrt(D))*L'.
+Obtain a Cholesky factorisation of a matrix Performs and LDL transformation
+[L,D] = ldl(A) and returns diag(sqrt(D))*L'.
 
 ";
 
@@ -47424,15 +47424,15 @@ Check if the matrix is upper triangular.
 
 ";
 
-%feature("docstring")  casadi::SX::is_op(casadi_int op) const  "
+%feature("docstring")  casadi::MatrixCommon::is_op(casadi_int op) const  "
 
-[INTERNAL]  Is it a certain operation.
+Is it a certain operation.
 
 ";
 
-%feature("docstring")  casadi::SX::is_regular() const  "
+%feature("docstring")  casadi::MatrixCommon::is_regular() const  "
 
-[INTERNAL]  Checks if expression does not contain NaN or Inf.
+Checks if expression does not contain NaN or Inf.
 
 ";
 
@@ -47463,17 +47463,17 @@ Functions called by friend functions defined here
 
 ";
 
-%feature("docstring")  casadi::SX::op() const  "
+%feature("docstring")  casadi::MatrixCommon::op() const  "
 
-[INTERNAL]  Get operation type.
+Get operation type.
 
 ";
 
 %feature("docstring")  casadi::MatrixCommon::pw_const(const MatrixCommon &t,
 const MatrixCommon &tval, const MatrixCommon &val) "
 
-[INTERNAL]  Create a piecewise constant function Create a piecewise constant
-function with n=val.size() intervals.
+Create a piecewise constant function Create a piecewise constant function
+with n=val.size() intervals.
 
 Inputs:
 
@@ -47549,9 +47549,9 @@ Get the sparsity pattern.
 MatrixCommon &D, MatrixCommon &LT, std::vector< casadi_int > &p, bool
 amd=true) "
 
-[INTERNAL]  Sparse LDL^T factorization Returns D and the strictly upper
-triangular entries of L^T I.e. ones on the diagonal are ignored. Only
-guarenteed to work for positive definite matrices.
+Sparse LDL^T factorization Returns D and the strictly upper triangular
+entries of L^T I.e. ones on the diagonal are ignored. Only guarenteed to
+work for positive definite matrices.
 
 ";
 
@@ -47599,7 +47599,7 @@ Calculate bilinear form x^T A y.
 %feature("docstring")  casadi::MatrixCommon::expand(const MatrixCommon &ex,
 MatrixCommon &weights, MatrixCommon &terms) "
 
-[INTERNAL]  Expand the expression as a weighted sum (with constant weights)
+Expand the expression as a weighted sum (with constant weights)
 
 ";
 
@@ -47656,16 +47656,16 @@ Transpose the matrix.
 
 ";
 
-%feature("docstring")  casadi::SX::is_smooth() const  "
+%feature("docstring")  casadi::MatrixCommon::is_smooth() const  "
 
-[INTERNAL]  Check if smooth.
+Check if smooth.
 
 ";
 
 %feature("docstring")  casadi::MatrixCommon::norm_inf_mul(const MatrixCommon
 &x, const MatrixCommon &y) "
 
-[INTERNAL]  Inf-norm of a Matrix-Matrix product.
+Inf-norm of a Matrix-Matrix product.
 
 ";
 
@@ -47696,8 +47696,8 @@ check if the matrix is -1 (note that false negative answers are possible)
 %feature("docstring")  casadi::MatrixCommon::eig_symbolic(const MatrixCommon
 &m) "
 
-[INTERNAL]  Attempts to find the eigenvalues of a symbolic matrix This will
-only work for up to 3x3 matrices.
+Attempts to find the eigenvalues of a symbolic matrix This will only work
+for up to 3x3 matrices.
 
 ";
 
@@ -47724,7 +47724,7 @@ Obtain information about sparsity
 %feature("docstring")  casadi::MatrixCommon::triangle(const MatrixCommon &x)
 "
 
-[INTERNAL]  triangle function
+triangle function
 
 \\\\[ \\\\begin {cases} \\\\Lambda(x) = 0 & |x| >= 1 \\\\\\\\ \\\\Lambda(x)
 = 1-|x| & |x| < 1 \\\\end {cases} \\\\]
@@ -47749,10 +47749,10 @@ triangle function
 
 ";
 
-%feature("docstring")  casadi::SX::n_dep() const  "
+%feature("docstring")  casadi::MatrixCommon::n_dep() const  "
 
-[INTERNAL]  Get the number of dependencies of a binary SXElem Only defined
-if symbolic scalar.
+Get the number of dependencies of a binary SXElem Only defined if symbolic
+scalar.
 
 ";
 
@@ -47793,7 +47793,7 @@ a matrix.
 
 %feature("docstring")  casadi::MatrixCommon::any(const MatrixCommon &x) "
 
-[INTERNAL]  Returns true only if any element in the matrix is true.
+Returns true only if any element in the matrix is true.
 
 ";
 
@@ -47829,9 +47829,9 @@ create a matrix with all inf
 
 ";
 
-%feature("docstring")  casadi::SX::element_hash() const  "
+%feature("docstring")  casadi::MatrixCommon::element_hash() const  "
 
-[INTERNAL]  Returns a number that is unique for a given symbolic scalar.
+Returns a number that is unique for a given symbolic scalar.
 
 Only defined if symbolic scalar.
 
@@ -47878,7 +47878,7 @@ one.
 %feature("docstring")  casadi::MatrixCommon::evalf(const MatrixCommon &expr)
 "
 
-[INTERNAL]  Evaluates the expression numerically.
+Evaluates the expression numerically.
 
 An error is raised when the expression contains symbols
 
@@ -47909,7 +47909,7 @@ Check if the matrix has any zero entries which are not structural zeros.
 %feature("docstring")  casadi::MatrixCommon::heaviside(const MatrixCommon
 &x) "
 
-[INTERNAL]  Heaviside function.
+Heaviside function.
 
 \\\\[ \\\\begin {cases} H(x) = 0 & x<0 \\\\\\\\ H(x) = 1/2 & x=0 \\\\\\\\
 H(x) = 1 & x>0 \\\\\\\\ \\\\end {cases} \\\\]
@@ -47937,7 +47937,7 @@ H(x) = 1 & x>0 \\\\\\\\ \\\\end {cases} \\\\]
 %feature("docstring")  casadi::MatrixCommon::poly_roots(const MatrixCommon
 &p) "
 
-[INTERNAL]  Attempts to find the roots of a polynomial.
+Attempts to find the roots of a polynomial.
 
 This will only work for polynomials up to order 3 It is assumed that the
 roots are real.
@@ -48030,10 +48030,10 @@ sparsity can be accessed with Sparsity& sparsity() Joel Andersson
 
 C++ includes: casadi_common.hpp ";
 
-%feature("docstring")  casadi::SX::dep(casadi_int ch=0) const  "
+%feature("docstring")  casadi::MatrixCommon::dep(casadi_int ch=0) const  "
 
-[INTERNAL]  Get expressions of the children of the expression Only defined
-if symbolic scalar. Wraps SXElem SXElem::dep(casadi_int ch=0) const.
+Get expressions of the children of the expression Only defined if symbolic
+scalar. Wraps SXElem SXElem::dep(casadi_int ch=0) const.
 
 ";
 
@@ -48098,9 +48098,9 @@ Supported formats: .mtx Matrix Market
 
 ";
 
-%feature("docstring")  casadi::SX::is_leaf() const  "
+%feature("docstring")  casadi::MatrixCommon::is_leaf() const  "
 
-[INTERNAL]  Check if SX is a leaf of the SX graph.
+Check if SX is a leaf of the SX graph.
 
 Only defined if symbolic scalar.
 
@@ -48109,10 +48109,10 @@ Only defined if symbolic scalar.
 %feature("docstring")  casadi::MatrixCommon::qr(const MatrixCommon &A,
 MatrixCommon &Q, MatrixCommon &R) "
 
-[INTERNAL]  QR factorization using the modified Gram-Schmidt algorithm More
-stable than the classical Gram-Schmidt, but may break down if the rows of A
-are nearly linearly dependent See J. Demmel: Applied Numerical Linear
-Algebra (algorithm 3.1.). Note that in SWIG, Q and R are returned by value.
+QR factorization using the modified Gram-Schmidt algorithm More stable than
+the classical Gram-Schmidt, but may break down if the rows of A are nearly
+linearly dependent See J. Demmel: Applied Numerical Linear Algebra
+(algorithm 3.1.). Note that in SWIG, Q and R are returned by value.
 
 ";
 
@@ -48144,7 +48144,7 @@ Get the sparsity pattern. See the Sparsity class for details.
 %feature("docstring")  casadi::MatrixCommon::poly_coeff(const MatrixCommon
 &f, const MatrixCommon &x) "
 
-[INTERNAL]  extracts polynomial coefficients from an expression
+extracts polynomial coefficients from an expression
 
 Parameters:
 -----------
@@ -48222,18 +48222,18 @@ create a matrix with all nan
 
 ";
 
-%feature("docstring")  casadi::SX::is_commutative() const  "
+%feature("docstring")  casadi::MatrixCommon::is_commutative() const  "
 
-[INTERNAL]  Check whether a binary SX is commutative.
+Check whether a binary SX is commutative.
 
 Only defined if symbolic scalar.
 
 ";
 
-%feature("docstring")  casadi::SX::is_valid_input() const  "
+%feature("docstring")  casadi::MatrixCommon::is_valid_input() const  "
 
-[INTERNAL]  Check if matrix can be used to define function inputs. Sparse
-matrices can return true if all non-zero elements are symbolic.
+Check if matrix can be used to define function inputs. Sparse matrices can
+return true if all non-zero elements are symbolic.
 
 ";
 
@@ -48259,7 +48259,7 @@ Get the size along a particular dimensions.
 %feature("docstring")  casadi::MatrixCommon::pw_lin(const MatrixCommon &t,
 const MatrixCommon &tval, const MatrixCommon &val) "
 
-[INTERNAL]  t a scalar variable (e.g. time)
+t a scalar variable (e.g. time)
 
 Create a piecewise linear function Create a piecewise linear function:
 
@@ -48338,13 +48338,9 @@ Returns the truth value of a Matrix.
 
 ";
 
-%feature("docstring") casadi::MatrixCommon::__nonzero__ "
-
-[INTERNAL] ";
-
 %feature("docstring")  casadi::MatrixCommon::all(const MatrixCommon &x) "
 
-[INTERNAL]  Returns true only if every element in the matrix is true.
+Returns true only if every element in the matrix is true.
 
 ";
 
@@ -48385,7 +48381,7 @@ const MatrixCommon &v, const MatrixCommon &r, const MatrixCommon &beta,
 const std::vector< casadi_int > &prinv, const std::vector< casadi_int > &pc,
 bool tr=false) "
 
-[INTERNAL]   Solve using a sparse QR factorization.
+Solve using a sparse QR factorization.
 
 ";
 
@@ -48410,7 +48406,7 @@ are possible)
 
 %feature("docstring")  casadi::MatrixCommon::adj(const MatrixCommon &A) "
 
-[INTERNAL]   Matrix adjoint.
+Matrix adjoint.
 
 ";
 
@@ -48438,7 +48434,7 @@ optionally both dimensions)
 MatrixCommon &f, const MatrixCommon &x, const MatrixCommon &a, const
 MatrixCommon &b, casadi_int order=5) "
 
-[INTERNAL]  Integrate f from a to b using Gaussian quadrature with n points.
+Integrate f from a to b using Gaussian quadrature with n points.
 
 ";
 
@@ -48458,7 +48454,7 @@ Integrate f from a to b using Gaussian quadrature with n points.
 MatrixCommon &f, const MatrixCommon &x, const MatrixCommon &a, const
 MatrixCommon &b, casadi_int order, const MatrixCommon &w) "
 
-[INTERNAL]   Matrix adjoint.
+Matrix adjoint.
 
 ";
 
@@ -48488,7 +48484,7 @@ MatrixCommon &x) "
 
 ";
 
-%feature("docstring")  casadi::SX::reset_input() const  "
+%feature("docstring")  casadi::MatrixCommon::reset_input() const  "
 
 [INTERNAL]  Reset the marker for an input expression.
 
@@ -48498,8 +48494,8 @@ MatrixCommon &x) "
 &A, MatrixCommon &V, MatrixCommon &R, MatrixCommon &beta, std::vector<
 casadi_int > &prinv, std::vector< casadi_int > &pc, bool amd=true) "
 
-[INTERNAL]  Sparse direct QR factorization See T. Davis: Direct Methods for
-Sparse Linear Systems.
+Sparse direct QR factorization See T. Davis: Direct Methods for Sparse
+Linear Systems.
 
 ";
 
@@ -48535,7 +48531,7 @@ keeping the existing non-zeros.
 %feature("docstring")  casadi::MatrixCommon::rectangle(const MatrixCommon
 &x) "
 
-[INTERNAL]  rectangle function
+rectangle function
 
 \\\\[ \\\\begin {cases} \\\\Pi(x) = 1 & |x| < 1/2 \\\\\\\\ \\\\Pi(x) = 1/2 &
 |x| = 1/2 \\\\\\\\ \\\\Pi(x) = 0 & |x| > 1/2 \\\\\\\\ \\\\end {cases} \\\\]
@@ -48579,7 +48575,7 @@ Get string representation.
 %feature("docstring")  casadi::MatrixCommon::minor(const MatrixCommon &x,
 casadi_int i, casadi_int j) "
 
-[INTERNAL]  Get the (i,j) minor matrix.
+Get the (i,j) minor matrix.
 
 ";
 
@@ -48595,10 +48591,9 @@ Get the (i,j) minor matrix.
 
 ";
 
-%feature("docstring")  casadi::SX::is_symbolic() const  "
+%feature("docstring")  casadi::MatrixCommon::is_symbolic() const  "
 
-[INTERNAL]  Check if symbolic (Dense) Sparse matrices invariable return
-false.
+Check if symbolic (Dense) Sparse matrices invariable return false.
 
 ";
 
@@ -48676,7 +48671,7 @@ the scalar conversion is valid.
 %feature("docstring")  casadi::MatrixCommon::cofactor(const MatrixCommon &x,
 casadi_int i, casadi_int j) "
 
-[INTERNAL]  Get the (i,j) cofactor matrix.
+Get the (i,j) cofactor matrix.
 
 ";
 
@@ -48694,7 +48689,7 @@ Get the (i,j) cofactor matrix.
 
 %feature("docstring")  casadi::MatrixCommon::ramp(const MatrixCommon &x) "
 
-[INTERNAL]  ramp function
+ramp function
 
 \\\\[ \\\\begin {cases} R(x) = 0 & x <= 1 \\\\\\\\ R(x) = x & x > 1 \\\\\\\\
 \\\\end {cases} \\\\]
@@ -48774,7 +48769,7 @@ Print a representation of the object.
 
 ";
 
-%feature("docstring")  casadi::SX::has_duplicates() const  "
+%feature("docstring")  casadi::MatrixCommon::has_duplicates() const  "
 
 [INTERNAL]  Detect duplicate symbolic expressions If there are symbolic
 primitives appearing more than once, the function will return true and the
@@ -48784,16 +48779,16 @@ after usage.
 
 ";
 
-%feature("docstring")  casadi::SX::name() const  "
+%feature("docstring")  casadi::MatrixCommon::name() const  "
 
-[INTERNAL]  Get name (only if symbolic scalar)
+Get name (only if symbolic scalar)
 
 ";
 
 %feature("docstring")  casadi::MatrixCommon::sparsify(const MatrixCommon &A,
 double tol=0) "
 
-[INTERNAL]  Make a matrix sparse by removing numerical zeros.
+Make a matrix sparse by removing numerical zeros.
 
 ";
 
@@ -48826,7 +48821,7 @@ Get the sparsity pattern. See the Sparsity class for details.
 &b, const MatrixCommon &D, const MatrixCommon &LT, const std::vector<
 casadi_int > &p) "
 
-[INTERNAL]   Solve using a sparse LDL^T factorization.
+Solve using a sparse LDL^T factorization.
 
 ";
 
@@ -66025,8 +66020,7 @@ Joris Gillis
 C++ includes: serializing_stream.hpp ";
 
 %feature("docstring")
-casadi::SerializingStream::SerializingStream(std::ostream &out, const Dict
-&opts=Dict()) "
+casadi::SerializingStream::SerializingStream(std::ostream &out) "
 
 Constructor.
 
@@ -77259,11 +77253,6 @@ Get documentation for a particular option.
 
 ";
 
-%feature("docstring")  casadi::casadi_qp_zero_blocking(casadi_qp_data< T1 >
-*d) "
-
-[INTERNAL] ";
-
 %feature("docstring")  casadi::check_exposed(T t) "
 
 [INTERNAL] ";
@@ -80636,7 +80625,8 @@ Get NLP solver input scheme name by index.
 
 ";
 
-%feature("docstring")  casadi::matrixName< SXElem >() "
+%feature("docstring")  casadi::casadi_qp_zero_blocking(casadi_qp_data< T1 >
+*d) "
 
 [INTERNAL] ";
 
