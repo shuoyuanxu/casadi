@@ -28,7 +28,7 @@
 using namespace std;
 
 namespace casadi {
- 
+
   template<>
   bool SX::__nonzero__() const {
     casadi_assert(numel()==1,
@@ -137,6 +137,15 @@ namespace casadi {
   }
 
   template<>
+  bool SX::is_valid_input() const {
+    for (casadi_int k=0; k<nnz(); ++k) // loop over non-zero elements
+      if (!nonzeros().at(k)->is_symbolic()) // if an element is not symbolic
+        return false;
+
+    return true;
+  }
+
+  template<>
   bool SX::is_symbolic() const {
     if (is_dense()) {
       return is_valid_input();
@@ -153,15 +162,6 @@ namespace casadi {
   template<>
   bool SX::is_op(casadi_int op) const {
     return scalar().is_op(op);
-  }
-
-  template<>
-  bool SX::is_valid_input() const {
-    for (casadi_int k=0; k<nnz(); ++k) // loop over non-zero elements
-      if (!nonzeros().at(k)->is_symbolic()) // if an element is not symbolic
-        return false;
-
-    return true;
   }
 
   template<> bool SX::has_duplicates() const {
@@ -425,11 +425,6 @@ namespace casadi {
   }
 
   template<>
-  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
-    return substitute(vector<SX>{ex}, vector<SX>{v}, vector<SX>{vdef}).front();
-  }
-
-  template<>
   vector<SX>
   SX::substitute(const vector<SX>& ex, const vector<SX>& v, const vector<SX>& vdef) {
 
@@ -469,6 +464,11 @@ namespace casadi {
     // Otherwise, evaluate symbolically
     Function F("tmp", v, ex);
     return F(vdef);
+  }
+
+  template<>
+  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
+    return substitute(vector<SX>{ex}, vector<SX>{v}, vector<SX>{vdef}).front();
   }
 
   template<>
@@ -574,15 +574,15 @@ namespace casadi {
   }
 
   template<>
-  SX SX::hessian(const SX &ex, const SX &arg) {
-    SX g;
-    return hessian(ex, arg, g);
-  }
-
-  template<>
   SX SX::hessian(const SX &ex, const SX &arg, SX &g) {
     g = gradient(ex, arg);
     return jacobian(g, arg, {{"symmetric", true}});
+  }
+
+  template<>
+  SX SX::hessian(const SX &ex, const SX &arg) {
+    SX g;
+    return hessian(ex, arg, g);
   }
 
   template<>
@@ -681,11 +681,6 @@ namespace casadi {
   }
 
   template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
-    return mtaylor(f, x, a, order, vector<casadi_int>(x.nnz(), 1));
-  }
-
-  template<>
   SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
                  const vector<casadi_int>& order_contributions) {
     casadi_assert(f.nnz()==f.numel() && x.nnz()==x.numel(),
@@ -699,6 +694,11 @@ namespace casadi {
     return reshape(mtaylor_recursive(vec(f), x, a, order,
                                      order_contributions),
                    f.size2(), f.size1()).T();
+  }
+
+  template<>
+  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
+    return mtaylor(f, x, a, order, vector<casadi_int>(x.nnz(), 1));
   }
 
   template<>
@@ -1018,5 +1018,5 @@ namespace casadi {
     casadi_error("Not implemented");
   }
 
-  template class CASADI_EXPORT Matrix< SXElem >;
+  template class CASADI_TEMPLATE_EXPORT Matrix< SXElem >;
 } // namespace casadi
