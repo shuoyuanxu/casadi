@@ -2707,9 +2707,9 @@ namespace casadi {
 } // namespace casadi
 
 #ifdef _WIN32
-  #define CASADI_EXPORT_TEMPLATE
+  #define CASADI_TEMPLATE_EXPORT CASADI_EXPORT
 #else // _WIN32
-  #define CASADI_EXPORT_TEMPLATE
+  #define CASADI_TEMPLATE_EXPORT
 #endif // _WIN32
 
 

@@ -47,7 +47,7 @@ namespace casadi {
   }
 
   // Instantiate templates
-  template class CASADI_EXPORT_TEMPLATE casadi_limits<casadi_int>;
-  template class CASADI_EXPORT_TEMPLATE Matrix<casadi_int>;
+  template class CASADI_TEMPLATE_EXPORT casadi_limits<casadi_int>;
+  template class CASADI_TEMPLATE_EXPORT Matrix<casadi_int>;
 
 } // namespace casadi
