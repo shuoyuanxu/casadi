@@ -30,65 +30,6 @@
 #include "matrix_decl.hpp"
 
 namespace casadi {
- 
-  /**
-  // Template specializations
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  solve(const Matrix<double>& a, const Matrix<double>& b,
-        const std::string& lsolver, const Dict& dict);
-
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  pinv(const Matrix<double>& A, const std::string& lsolver, const Dict& dict);
-
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  rand(const Sparsity& sp); // NOLINT(runtime/threadsafe_fn)
-
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  expm_const(const Matrix<double>& A, const Matrix<double>& t);
-
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  expm(const Matrix<double>& A);
-
-  template<>
-  Matrix<double> Matrix<double>::
-  solve(const Matrix<double>& A, const Matrix<double>& b,
-        const string& lsolver, const Dict& dict);
-
-  template<>
-  Matrix<double> Matrix<double>::
-  inv(const Matrix<double>& A,
-        const string& lsolver, const Dict& dict);
-  template<>
-  Matrix<double> Matrix<double>::
-  pinv(const Matrix<double>& A, const string& lsolver,
-       const Dict& dict);
-
-  template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
-  rand(const Sparsity& sp); // NOLINT(runtime/threadsafe_fn)
-
-  template<>
-  Matrix<double> Matrix<double>::
-  expm_const(const Matrix<double>& A, const Matrix<double>& t);
-
-  template<>
-  Matrix<double> Matrix<double>::
-  expm(const Matrix<double>& A);
-
-  template<> void DM::export_code(const std::string& lang,
-       std::ostream &stream, const Dict& options) const;
-
-  template<>
-  Dict DM::info() const;
-
-  template<>
-  void DM::to_file(const std::string& filename, const std::string& format_hint) const;
-*/
 
 #ifndef CASADI_DM_INSTANTIATOR_CPP 
   extern template class Matrix<double>;

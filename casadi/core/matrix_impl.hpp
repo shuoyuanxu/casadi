@@ -2706,4 +2706,11 @@ namespace casadi {
 
 } // namespace casadi
 
+#ifdef _WIN32
+  #define CASADI_EXPORT_TEMPLATE CASADI_EXPORT
+#else // _WIN32
+  #define CASADI_EXPORT_TEMPLATE
+#end // _WIN32
+
+
 #endif // CASADI_MATRIX_IMPL_HPP

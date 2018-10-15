@@ -205,7 +205,7 @@ namespace casadi {
   }
 
   // Instantiate templates
-  template class casadi_limits<double>;
-  template class Matrix<double>;
+  template class CASADI_EXPORT_TEMPLATE casadi_limits<double>;
+  template class CASADI_EXPORT_TEMPLATE Matrix<double>;
 
 } // namespace casadi
