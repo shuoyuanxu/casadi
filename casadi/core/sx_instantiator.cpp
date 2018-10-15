@@ -1018,5 +1018,5 @@ namespace casadi {
     casadi_error("Not implemented");
   }
 
-  template class CASADI_EXPORT Matrix< SXElem >;
+  template class CASADI_TEMPLATE_EXPORT Matrix< SXElem >;
 } // namespace casadi
