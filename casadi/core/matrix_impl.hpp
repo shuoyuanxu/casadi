@@ -2701,6 +2701,12 @@ namespace casadi {
     return deserialize(ss);
   }
 
+#ifdef _WIN32
+  #define CASADI_TEMPLATE_EXPORT CASADI_EXPORT
+#else // _WIN32
+  #define CASADI_TEMPLATE_EXPORT
+#endif // _WIN32
+
 
 } // namespace casadi
 
