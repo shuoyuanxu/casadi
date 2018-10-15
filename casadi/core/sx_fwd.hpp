@@ -26,8 +26,6 @@
 #define CASADI_SX_FWD_HPP
 #include "matrix_fwd.hpp"
 
-using namespace std;
-
 namespace casadi {
   
   class SXElem;

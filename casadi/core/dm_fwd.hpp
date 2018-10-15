@@ -27,7 +27,6 @@
 #include "matrix_fwd.hpp"
 #include <vector>
 #include <map>
-using namespace std;
 
 namespace casadi {
 

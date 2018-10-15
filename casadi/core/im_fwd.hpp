@@ -26,8 +26,6 @@
 #define CASADI_IM_FWD_HPP
 #include "matrix_fwd.hpp"
 
-using namespace std;
-
 namespace casadi {
 
   typedef Matrix<casadi_int> IM;
