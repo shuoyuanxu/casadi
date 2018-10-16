@@ -3,9 +3,14 @@ branches:
     - /.*travis.*/
 
 image:
+- Visual Studio 2013
 - Visual Studio 2015
-- Visual Studio 2017
- 
+#- Visual Studio 2017
+
+configuration:
+- Debug
+- Release
+
 build_script:
   - set arch=
   - if "%arch%"=="Win64" ( set arch= Win64)
@@ -17,4 +22,4 @@ build_script:
   - echo %generator%
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
   - cmake "-G %generator%" -H. -B_builds
-  - cmake --build _builds --config "Debug"
+  - cmake --build _builds
