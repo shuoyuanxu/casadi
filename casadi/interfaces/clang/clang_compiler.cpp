@@ -203,7 +203,7 @@ namespace casadi {
     paths << include_path_ << pathsep;
     std::string path;
     while (std::getline(paths, path, pathsep)) {
-      compInst.getHeaderSearchOpts().AddPath(path.c_str(), clang::frontend::System, false, false);
+      compInst.getHeaderSearchOpts().AddPath(path, clang::frontend::System, false, false);
     }
 
     // Create an LLVM context (NOTE: should use a static context instead?)
