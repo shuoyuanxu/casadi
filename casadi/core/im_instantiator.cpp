@@ -38,17 +38,17 @@ namespace casadi {
   }
 
   template<>
-  Dict IM::info() const {
+  Dict CASADI_EXPORT IM::info() const {
     return {{"sparsity", sparsity().info()}, {"data", nonzeros()}};
   }
   template<>
-  void IM::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT IM::to_file(const std::string& filename, const std::string& format_hint) const {
     casadi_error("Not implemented");
   }
 
   // Instantiate templates
-  template class CASADI_EXPORT casadi_limits<casadi_int>;
-  template class CASADI_EXPORT Matrix<casadi_int>;
+  template class casadi_limits<casadi_int>;
+  template class Matrix<casadi_int>;
 
 
 } // namespace casadi

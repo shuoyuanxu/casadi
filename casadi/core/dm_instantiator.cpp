@@ -31,7 +31,7 @@ namespace casadi {
 
 
   template<>
-  DM DM::
+  DM CASADI_EXPORT DM::
   solve(const DM& A, const DM& b,
         const string& lsolver, const Dict& dict) {
     Linsol mysolver("tmp", lsolver, A.sparsity(), dict);
@@ -39,14 +39,14 @@ namespace casadi {
   }
 
   template<>
-  DM DM::
+  DM CASADI_EXPORT DM::
   inv(const DM& A,
         const string& lsolver, const Dict& dict) {
     return solve(A, DM::eye(A.size1()), lsolver, dict);
   }
 
   template<>
-  DM DM::
+  DM CASADI_EXPORT DM::
   pinv(const DM& A, const string& lsolver,
        const Dict& dict) {
     if (A.size1()>=A.size2()) {
@@ -57,7 +57,7 @@ namespace casadi {
   }
 
   template<>
-  CASADI_EXPORT DM DM::
+  DM CASADI_EXPORT DM::
   rand(const Sparsity& sp) { // NOLINT(runtime/threadsafe_fn)
     // C++11 random number generator
     std::uniform_real_distribution<double> distribution(0., 1.);
@@ -69,19 +69,19 @@ namespace casadi {
   }
 
   template<>
-  DM DM::
+  DM CASADI_EXPORT DM::
   expm(const DM& A) {
     Function ret = expmsol("mysolver", "slicot", A.sparsity());
     return ret(std::vector<DM>{A, 1})[0];
   }
 
   template<>
-  DM DM::
+  DM CASADI_EXPORT DM::
   expm_const(const DM& A, const DM& t) {
     return expm(A*t);
   }
 
-  template<> void DM::export_code(const std::string& lang,
+  template<> void CASADI_EXPORT DM::export_code(const std::string& lang,
        std::ostream &stream, const Dict& options) const {
 
     casadi_assert(lang=="matlab", "Only matlab language supported for now.");
@@ -182,12 +182,12 @@ namespace casadi {
   }
 
   template<>
-  Dict DM::info() const {
+  Dict CASADI_EXPORT DM::info() const {
     return {{"sparsity", sparsity().info()}, {"data", nonzeros()}};
   }
 
   template<>
-  void DM::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT DM::to_file(const std::string& filename, const std::string& format_hint) const {
     std::string format = Sparsity::file_format(filename, format_hint);
     std::ofstream out(filename);
     if (format=="mtx") {
@@ -207,6 +207,6 @@ namespace casadi {
 
   // Instantiate templates
   template class CASADI_EXPORT casadi_limits<double>;
-  template class CASADI_EXPORT Matrix<double>;
+  template class Matrix<double>;
 
 } // namespace casadi

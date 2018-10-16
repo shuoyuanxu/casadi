@@ -32,7 +32,7 @@ using namespace std;
 namespace casadi {
 
   template<>
-  bool SX::__nonzero__() const {
+  bool CASADI_EXPORT SX::__nonzero__() const {
     casadi_assert(numel()==1,
       "Only scalar Matrix could have a truth value, but you "
       "provided a shape" + dim());
@@ -40,17 +40,17 @@ namespace casadi {
   }
 
   template<>
-  void SX::set_max_depth(casadi_int eq_depth) {
+  void CASADI_EXPORT SX::set_max_depth(casadi_int eq_depth) {
     SXNode::eq_depth_ = eq_depth;
   }
 
   template<>
-  casadi_int SX::get_max_depth() {
+  casadi_int CASADI_EXPORT SX::get_max_depth() {
     return SXNode::eq_depth_;
   }
 
   template<>
-  SX SX::_sym(const string& name, const Sparsity& sp) {
+  SX CASADI_EXPORT SX::_sym(const string& name, const Sparsity& sp) {
     // Create a dense n-by-m matrix
     vector<SXElem> retv;
 
@@ -98,7 +98,7 @@ namespace casadi {
   }
 
   template<>
-  bool SX::is_regular() const {
+  bool CASADI_EXPORT SX::is_regular() const {
     // First pass: ignore symbolics
     for (casadi_int i=0; i<nnz(); ++i) {
       const SXElem& x = nonzeros().at(i);
@@ -114,7 +114,7 @@ namespace casadi {
   }
 
   template<>
-  bool SX::is_smooth() const {
+  bool CASADI_EXPORT SX::is_smooth() const {
     // Make a function
     Function temp("temp", {SX()}, {*this});
 
@@ -124,22 +124,22 @@ namespace casadi {
   }
 
   template<>
-  casadi_int SX::element_hash() const {
+  casadi_int CASADI_EXPORT SX::element_hash() const {
     return scalar().__hash__();
   }
 
   template<>
-  bool SX::is_leaf() const {
+  bool CASADI_EXPORT SX::is_leaf() const {
     return scalar().is_leaf();
   }
 
   template<>
-  bool SX::is_commutative() const {
+  bool CASADI_EXPORT SX::is_commutative() const {
     return scalar().is_commutative();
   }
 
   template<>
-  bool SX::is_valid_input() const {
+  bool CASADI_EXPORT SX::is_valid_input() const {
     for (casadi_int k=0; k<nnz(); ++k) // loop over non-zero elements
       if (!nonzeros().at(k)->is_symbolic()) // if an element is not symbolic
         return false;
@@ -148,7 +148,7 @@ namespace casadi {
   }
 
   template<>
-  bool SX::is_symbolic() const {
+  bool CASADI_EXPORT SX::is_symbolic() const {
     if (is_dense()) {
       return is_valid_input();
     } else {
@@ -157,16 +157,16 @@ namespace casadi {
   }
 
   template<>
-  casadi_int SX::op() const {
+  casadi_int CASADI_EXPORTSX::op() const {
     return scalar().op();
   }
 
   template<>
-  bool SX::is_op(casadi_int op) const {
+  bool CASADI_EXPORT SX::is_op(casadi_int op) const {
     return scalar().is_op(op);
   }
 
-  template<> bool SX::has_duplicates() const {
+  template<> bool CASADI_EXPORT SX::has_duplicates() const {
     bool has_duplicates = false;
     for (auto&& i : nonzeros_) {
       bool is_duplicate = i.get_temp()!=0;
@@ -179,29 +179,29 @@ namespace casadi {
     return has_duplicates;
   }
 
-  template<> void SX::reset_input() const {
+  template<> void CASADI_EXPORT SX::reset_input() const {
     for (auto&& i : nonzeros_) {
       i.set_temp(0);
     }
   }
 
   template<>
-  string SX::name() const {
+  string CASADI_EXPORT SX::name() const {
     return scalar().name();
   }
 
   template<>
-  SX SX::dep(casadi_int ch) const {
+  SX CASADI_EXPORT SX::dep(casadi_int ch) const {
     return scalar().dep(ch);
   }
 
   template<>
-  casadi_int SX::n_dep() const {
+  casadi_int CASADI_EXPORT SX::n_dep() const {
     return scalar().n_dep();
   }
 
   template<>
-  void SX::expand(const SX& ex2, SX& ww, SX& tt) {
+  void CASADI_EXPORT SX::expand(const SX& ex2, SX& ww, SX& tt) {
     casadi_assert_dev(ex2.is_scalar());
     SXElem ex = ex2.scalar();
 
@@ -330,7 +330,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::pw_const(const SX& t, const SX& tval, const SX& val) {
+  SX CASADI_EXPORT SX::pw_const(const SX& t, const SX& tval, const SX& val) {
     // number of intervals
     casadi_int n = val.numel();
 
@@ -346,7 +346,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::pw_lin(const SX& t, const SX& tval, const SX& val) {
+  SX CASADI_EXPORT SX::pw_lin(const SX& t, const SX& tval, const SX& val) {
     // Number of points
     casadi_int N = tval.numel();
     casadi_assert(N>=2, "pw_lin: N>=2");
@@ -367,7 +367,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::gauss_quadrature(const SX& f, const SX& x, const SX& a, const SX& b, casadi_int order,
+  SX CASADI_EXPORT SX::gauss_quadrature(const SX& f, const SX& x, const SX& a, const SX& b, casadi_int order,
                           const SX& w) {
     casadi_assert(order == 5, "gauss_quadrature: order must be 5");
     casadi_assert(w.is_empty(), "gauss_quadrature: empty weights");
@@ -413,7 +413,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::simplify(const SX& x) {
+  SX CASADI_EXPORT SX::simplify(const SX& x) {
     SX r = x;
     for (casadi_int el=0; el<r.nnz(); ++el) {
       // Start by expanding the node to a weighted sum
@@ -427,7 +427,7 @@ namespace casadi {
   }
 
   template<>
-  vector<SX>
+  vector<SX> CASADI_EXPORT
   SX::substitute(const vector<SX>& ex, const vector<SX>& v, const vector<SX>& vdef) {
 
     // Assert consistent dimensions
@@ -469,12 +469,12 @@ namespace casadi {
   }
 
   template<>
-  SX SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
+  SX CASADI_EXPORT SX::substitute(const SX& ex, const SX& v, const SX& vdef) {
     return substitute(vector<SX>{ex}, vector<SX>{v}, vector<SX>{vdef}).front();
   }
 
   template<>
-  void SX::substitute_inplace(const vector<SX >& v, vector<SX >& vdef,
+  void CASADI_EXPORT SX::substitute_inplace(const vector<SX >& v, vector<SX >& vdef,
                              vector<SX >& ex, bool reverse) {
     // Assert correctness
     casadi_assert_dev(v.size()==vdef.size());
@@ -548,7 +548,7 @@ namespace casadi {
   }
 
   template<>
-  bool SX::depends_on(const SX &x, const SX &arg) {
+  bool CASADI_EXPORT SX::depends_on(const SX &x, const SX &arg) {
     if (x.nnz()==0) return false;
 
     // Construct a temporary algorithm
@@ -567,7 +567,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::jacobian(const SX &f, const SX &x, const Dict& opts) {
+  SX CASADI_EXPORT SX::jacobian(const SX &f, const SX &x, const Dict& opts) {
     // Propagate verbose option to helper function
     Dict h_opts;
     if (opts.count("verbose")) h_opts["verbose"] = opts.at("verbose");
@@ -576,19 +576,19 @@ namespace casadi {
   }
 
   template<>
-  SX SX::hessian(const SX &ex, const SX &arg, SX &g) {
+  SX CASADI_EXPORT SX::hessian(const SX &ex, const SX &arg, SX &g) {
     g = gradient(ex, arg);
     return jacobian(g, arg, {{"symmetric", true}});
   }
 
   template<>
-  SX SX::hessian(const SX &ex, const SX &arg) {
+  SX CASADI_EXPORT SX::hessian(const SX &ex, const SX &arg) {
     SX g;
     return hessian(ex, arg, g);
   }
 
   template<>
-  std::vector<std::vector<SX> >
+  std::vector<std::vector<SX> > CASADI_EXPORT
   SX::forward(const std::vector<SX> &ex, const std::vector<SX> &arg,
           const std::vector<std::vector<SX> > &v, const Dict& opts) {
     // Read options
@@ -613,7 +613,7 @@ namespace casadi {
   }
 
   template<>
-  std::vector<std::vector<SX> >
+  std::vector<std::vector<SX> > CASADI_EXPORT
   SX::reverse(const std::vector<SX> &ex, const std::vector<SX> &arg,
           const std::vector<std::vector<SX> > &v, const Dict& opts) {
     // Read options
@@ -638,12 +638,12 @@ namespace casadi {
   }
 
   template<>
-  std::vector<bool> SX::which_depends(const SX &expr, const SX &var, casadi_int order, bool tr) {
+  std::vector<bool> CASADI_EXPORT SX::which_depends(const SX &expr, const SX &var, casadi_int order, bool tr) {
     return _which_depends(expr, var, order, tr);
   }
 
   template<>
-  SX SX::taylor(const SX& f, const SX& x,
+  SX CASADI_EXPORT SX::taylor(const SX& f, const SX& x,
                 const SX& a, casadi_int order) {
     casadi_assert_dev(x.is_scalar() && a.is_scalar());
     if (f.nnz()!=f.numel())
@@ -683,7 +683,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
+  SX CASADI_EXPORT SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order,
                  const vector<casadi_int>& order_contributions) {
     casadi_assert(f.nnz()==f.numel() && x.nnz()==x.numel(),
                           "mtaylor: not implemented for sparse matrices");
@@ -699,18 +699,18 @@ namespace casadi {
   }
 
   template<>
-  SX SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
+  SX CASADI_EXPORT SX::mtaylor(const SX& f, const SX& x, const SX& a, casadi_int order) {
     return mtaylor(f, x, a, order, vector<casadi_int>(x.nnz(), 1));
   }
 
   template<>
-  casadi_int SX::n_nodes(const SX& x) {
+  casadi_int CASADI_EXPORT SX::n_nodes(const SX& x) {
     Function f("tmp", {SX()}, {x});
     return f.n_nodes();
   }
 
   template<>
-  string
+  string CASADI_EXPORT
   SX::print_operator(const SX& X, const vector<string>& args) {
     SXElem x = X.scalar();
     casadi_int ndeps = casadi_math<double>::ndeps(x.op());
@@ -724,13 +724,13 @@ namespace casadi {
   }
 
   template<>
-  vector<SX> SX::symvar(const SX& x) {
+  vector<SX> CASADI_EXPORT SX::symvar(const SX& x) {
     Function f("tmp", vector<SX>{}, {x});
     return f.free_sx();
   }
 
   template<>
-  void SX::shared(vector<SX >& ex,
+  void CASADI_EXPORT SX::shared(vector<SX >& ex,
                          vector<SX >& v_sx,
                          vector<SX >& vdef_sx,
                          const string& v_prefix,
@@ -856,7 +856,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::poly_coeff(const SX& ex, const SX& x) {
+  SX CASADI_EXPORT SX::poly_coeff(const SX& ex, const SX& x) {
     casadi_assert_dev(ex.is_scalar());
     casadi_assert_dev(x.is_scalar());
     casadi_assert_dev(x.is_symbolic());
@@ -884,7 +884,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::poly_roots(const SX& p) {
+  SX CASADI_EXPORT SX::poly_roots(const SX& p) {
     casadi_assert(p.size2()==1,
                           "poly_root(): supplied parameter must be column vector but got "
                           + p.dim() + ".");
@@ -965,7 +965,7 @@ namespace casadi {
   }
 
   template<>
-  SX SX::eig_symbolic(const SX& m) {
+  SX CASADI_EXPORT SX::eig_symbolic(const SX& m) {
     casadi_assert(m.size1()==m.size2(), "eig(): supplied matrix must be square");
 
     vector<SX> ret;
@@ -989,7 +989,7 @@ namespace casadi {
   }
 
   template<>
-  void SX::print_split(casadi_int nnz, const SXElem* nonzeros, vector<string>& nz,
+  void CASADI_EXPORT SX::print_split(casadi_int nnz, const SXElem* nonzeros, vector<string>& nz,
                       vector<string>& inter) {
     // Find out which noded can be inlined
     std::map<const SXNode*, casadi_int> nodeind;
@@ -1002,23 +1002,23 @@ namespace casadi {
     for (casadi_int i=0; i<nnz; ++i) nz.push_back(nonzeros[i]->print_compact(nodeind, inter));
   }
 
-  template<> vector<SX> SX::get_input(const Function& f) {
+  template<> vector<SX> CASADI_EXPORT SX::get_input(const Function& f) {
     return f.sx_in();
   }
 
-  template<> vector<SX> SX::get_free(const Function& f) {
+  template<> vector<SX> CASADI_EXPORT SX::get_free(const Function& f) {
     return f.free_sx();
   }
 
   template<>
-  Dict SX::info() const {
+  Dict CASADI_EXPORT SX::info() const {
     return {{"function", Function("f", std::vector<SX>{}, std::vector<SX>{*this})}};
   }
 
   template<>
-  void SX::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT SX::to_file(const std::string& filename, const std::string& format_hint) const {
     casadi_error("Not implemented");
   }
 
-  template class CASADI_EXPORT Matrix< SXElem >;
+  template class Matrix< SXElem >;
 } // namespace casadi
