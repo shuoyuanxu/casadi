@@ -28,7 +28,7 @@
 using namespace std;
 
 namespace casadi {
- 
+
   bool CASADI_EXPORT is_slice(const IM& x, bool ind1) {
     return x.is_scalar() || (x.is_column() && x.is_dense() && is_slice(x.nonzeros(), ind1));
   }

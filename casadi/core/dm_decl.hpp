@@ -47,7 +47,7 @@ namespace casadi {
 
   template<>
   CASADI_EXPORT DM DM::
-  rand(const Sparsity& sp);
+  rand(const Sparsity& sp); // NOLINT(runtime/threadsafe_fn)
 
   template<>
   DM DM::
@@ -64,9 +64,10 @@ namespace casadi {
   Dict CASADI_EXPORT DM::info() const;
 
   template<>
-  void CASADI_EXPORT DM::to_file(const std::string& filename, const std::string& format_hint) const;
+  void CASADI_EXPORT DM::to_file(const std::string& filename,
+    const std::string& format_hint) const;
 
-#ifndef CASADI_DM_INSTANTIATOR_CPP 
+#ifndef CASADI_DM_INSTANTIATOR_CPP
   extern template class Matrix<double>;
 #endif // CASADI_DM_INSTANTIATOR_CPP
 

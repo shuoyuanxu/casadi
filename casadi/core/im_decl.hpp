@@ -29,7 +29,7 @@
 #include "matrix_decl.hpp"
 
 namespace casadi {
- 
+
   /// Is the IM a Slice
   bool CASADI_EXPORT is_slice(const IM& x, bool ind1=false);
 
@@ -39,9 +39,10 @@ namespace casadi {
   template<>
   Dict CASADI_EXPORT IM::info() const;
   template<>
-  void CASADI_EXPORT IM::to_file(const std::string& filename, const std::string& format_hint) const;
+  void CASADI_EXPORT IM::to_file(const std::string& filename,
+    const std::string& format_hint) const;
 
-#ifndef CASADI_IM_INSTANTIATOR_CPP 
+#ifndef CASADI_IM_INSTANTIATOR_CPP
   extern template class Matrix<casadi_int>;
 #endif // CASADI_IM_INSTANTIATOR_CPP
 

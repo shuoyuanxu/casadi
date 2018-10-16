@@ -29,7 +29,7 @@
 namespace casadi {
 
   typedef Matrix<casadi_int> IM;
-  
+
 } // namespace casadi
 
 #endif // CASADI_IM_FWD_HPP

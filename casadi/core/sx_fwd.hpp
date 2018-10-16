@@ -27,10 +27,10 @@
 #include "matrix_fwd.hpp"
 
 namespace casadi {
-  
+
   class SXElem;
   typedef Matrix<SXElem> SX;
-  
+
   ///@{
   /// Readability typedefs
   typedef Matrix<SXElem> SX;

@@ -182,10 +182,9 @@ template<> inline std::string matrixName<SXElem>() { return "SX"; }
   void CASADI_EXPORT SX::to_file(const std::string& filename, const std::string& format_hint) const;
 
 
-#ifndef CASADI_SX_INSTANTIATOR_CPP 
+#ifndef CASADI_SX_INSTANTIATOR_CPP
   extern template class Matrix<SXElem>;
 #endif // CASADI_SX_INSTANTIATOR_CPP
-
 
 } // namespace casadi
 
