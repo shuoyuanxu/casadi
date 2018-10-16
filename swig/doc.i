@@ -47424,13 +47424,13 @@ Check if the matrix is upper triangular.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_op(casadi_int op) const  "
+%feature("docstring")  casadi::SX::is_op(casadi_int op) const  "
 
 Is it a certain operation.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_regular() const  "
+%feature("docstring")  casadi::SX::is_regular() const  "
 
 Checks if expression does not contain NaN or Inf.
 
@@ -47463,7 +47463,7 @@ Functions called by friend functions defined here
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::op() const  "
+%feature("docstring")  casadi::SX::op() const  "
 
 Get operation type.
 
@@ -47656,7 +47656,7 @@ Transpose the matrix.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_smooth() const  "
+%feature("docstring")  casadi::SX::is_smooth() const  "
 
 Check if smooth.
 
@@ -47715,7 +47715,7 @@ for up to 3x3 matrices.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::info() const  "
+%feature("docstring")  casadi::SX::info() const  "
 
 Obtain information about sparsity
 
@@ -47749,7 +47749,7 @@ triangle function
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::n_dep() const  "
+%feature("docstring")  casadi::SX::n_dep() const  "
 
 Get the number of dependencies of a binary SXElem Only defined if symbolic
 scalar.
@@ -47829,7 +47829,7 @@ create a matrix with all inf
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::element_hash() const  "
+%feature("docstring")  casadi::SX::element_hash() const  "
 
 Returns a number that is unique for a given symbolic scalar.
 
@@ -48030,7 +48030,7 @@ sparsity can be accessed with Sparsity& sparsity() Joel Andersson
 
 C++ includes: casadi_common.hpp ";
 
-%feature("docstring")  casadi::MatrixCommon::dep(casadi_int ch=0) const  "
+%feature("docstring")  casadi::SX::dep(casadi_int ch=0) const  "
 
 Get expressions of the children of the expression Only defined if symbolic
 scalar. Wraps SXElem SXElem::dep(casadi_int ch=0) const.
@@ -48089,8 +48089,8 @@ symbolic primitives.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::to_file(const std::string
-&filename, const std::string &format="") const  "
+%feature("docstring")  casadi::SX::to_file(const std::string &filename,
+const std::string &format="") const  "
 
 Export numerical matrix to file
 
@@ -48098,7 +48098,7 @@ Supported formats: .mtx Matrix Market
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_leaf() const  "
+%feature("docstring")  casadi::SX::is_leaf() const  "
 
 Check if SX is a leaf of the SX graph.
 
@@ -48222,7 +48222,7 @@ create a matrix with all nan
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_commutative() const  "
+%feature("docstring")  casadi::SX::is_commutative() const  "
 
 Check whether a binary SX is commutative.
 
@@ -48230,7 +48230,7 @@ Only defined if symbolic scalar.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_valid_input() const  "
+%feature("docstring")  casadi::SX::is_valid_input() const  "
 
 Check if matrix can be used to define function inputs. Sparse matrices can
 return true if all non-zero elements are symbolic.
@@ -48484,7 +48484,7 @@ MatrixCommon &x) "
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::reset_input() const  "
+%feature("docstring")  casadi::SX::reset_input() const  "
 
 [INTERNAL]  Reset the marker for an input expression.
 
@@ -48591,7 +48591,7 @@ Get the (i,j) minor matrix.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::is_symbolic() const  "
+%feature("docstring")  casadi::SX::is_symbolic() const  "
 
 Check if symbolic (Dense) Sparse matrices invariable return false.
 
@@ -48769,7 +48769,7 @@ Print a representation of the object.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::has_duplicates() const  "
+%feature("docstring")  casadi::SX::has_duplicates() const  "
 
 [INTERNAL]  Detect duplicate symbolic expressions If there are symbolic
 primitives appearing more than once, the function will return true and the
@@ -48779,7 +48779,7 @@ after usage.
 
 ";
 
-%feature("docstring")  casadi::MatrixCommon::name() const  "
+%feature("docstring")  casadi::SX::name() const  "
 
 Get name (only if symbolic scalar)
 
