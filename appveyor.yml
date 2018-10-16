@@ -22,7 +22,7 @@ build_script:
   - echo %vsyear%
   - if "%vsyear%"=="2017" (call "C:\Program Files (x86)\Microsoft Visual Studio\%vsyear%\Community\VC\Auxiliary\Build\vcvars%bitness%.bat" )
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
-  - set generator="-GVisual Studio %vsver% %vsyear%%arch%"
+  - set generator="-GVisual Studio %vsver% %vsyear% Win64"
   - echo %generator%
-  - cmake "-GVisual Studio %vsver% %vsyear%%arch%" -H. -B_builds
+  - cmake "-GVisual Studio %vsver% %vsyear% Win64" -H. -B_builds
   - cmake --build _builds
