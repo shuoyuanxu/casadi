@@ -20,7 +20,7 @@ build_script:
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set vsyear=2015 & set vsver=14)
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set vsyear=2013 & set vsver=12)
   - echo %vsyear%
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\%vsyear%\Community\VC\Auxiliary\Build\vcvars%bitness%.bat"
+  #- call "C:\Program Files (x86)\Microsoft Visual Studio\%vsyear%\Community\VC\Auxiliary\Build\vcvars%bitness%.bat"
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
   - cmake "-GVisual Studio %vsver% %vsyear%%arch%" -H. -B_builds
   - cmake --build _builds
