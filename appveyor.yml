@@ -12,7 +12,7 @@ configuration:
 - Release
 
 build_script:
-  - set arch=" Win64"
+  - set arch= Win64
   - set bitness=64
   - echo %arch%
   - echo %APPVEYOR_BUILD_WORKER_IMAGE%
@@ -24,5 +24,5 @@ build_script:
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
   - set generator="-GVisual Studio %vsver% %vsyear%%arch%"
   - echo %generator%
-  - cmake "%generator%" -H. -B_builds
+  - cmake "-GVisual Studio %vsver% %vsyear%%arch%" -H. -B_builds
   - cmake --build _builds
