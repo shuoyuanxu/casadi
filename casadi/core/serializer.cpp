@@ -29,6 +29,7 @@
 #include "slice.hpp"
 #include "linsol.hpp"
 #include "importer.hpp"
+#include "im_decl.hpp"
 #include "generic_type.hpp"
 #include <iomanip>
 
