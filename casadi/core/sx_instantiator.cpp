@@ -157,7 +157,7 @@ namespace casadi {
   }
 
   template<>
-  casadi_int CASADI_EXPORTSX::op() const {
+  casadi_int CASADI_EXPORT SX::op() const {
     return scalar().op();
   }
 
