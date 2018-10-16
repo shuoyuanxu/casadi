@@ -154,7 +154,8 @@ namespace casadi {
       MX extended = MX::blockcat({{At, Ybar}, {N, At}});
       MX R = expm(extended*t);
 
-      Abar = R(Slice(0, A_.size1()), Slice(A_.size1(), 2*A_.size1())); // NOLINT(cppcoreguidelines-slicing)
+      Abar = R(Slice(0, A_.size1()), // NOLINT(cppcoreguidelines-slicing)
+               Slice(A_.size1(), 2*A_.size1()));
     }
     Function ret = Function(name, {A, t, Y, Ybar}, {Abar, tbar});
 

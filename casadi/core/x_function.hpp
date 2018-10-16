@@ -949,7 +949,8 @@ namespace casadi {
     stream << "  end" << std::endl;
     stream << "end" << std::endl;
     stream << "function y=if_else_zero_gen(c,e)" << std::endl;
-    stream << "  if isa(c+e,'casadi.SX') || isa(c+e,'casadi.MX') || isa(c+e,'casadi.DM')" << std::endl;
+    stream << "  if isa(c+e,'casadi.SX') || isa(c+e,'casadi.MX') "
+              "|| isa(c+e,'casadi.DM')" << std::endl;
     stream << "    y = if_else(c, e, 0);" << std::endl;
     stream << "  else" << std::endl;
     stream << "    if c" << std::endl;
