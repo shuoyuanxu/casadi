@@ -187,7 +187,8 @@ namespace casadi {
   }
 
   template<>
-  void CASADI_EXPORT DM::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT DM::to_file(const std::string& filename,
+      const std::string& format_hint) const {
     std::string format = Sparsity::file_format(filename, format_hint);
     std::ofstream out(filename);
     if (format=="mtx") {

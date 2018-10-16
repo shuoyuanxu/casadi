@@ -367,8 +367,8 @@ namespace casadi {
   }
 
   template<>
-  SX CASADI_EXPORT SX::gauss_quadrature(const SX& f, const SX& x, const SX& a, const SX& b, casadi_int order,
-                          const SX& w) {
+  SX CASADI_EXPORT SX::gauss_quadrature(const SX& f, const SX& x, const SX& a,
+      const SX& b, casadi_int order, const SX& w) {
     casadi_assert(order == 5, "gauss_quadrature: order must be 5");
     casadi_assert(w.is_empty(), "gauss_quadrature: empty weights");
 
@@ -638,7 +638,8 @@ namespace casadi {
   }
 
   template<>
-  std::vector<bool> CASADI_EXPORT SX::which_depends(const SX &expr, const SX &var, casadi_int order, bool tr) {
+  std::vector<bool> CASADI_EXPORT SX::which_depends(const SX &expr,
+      const SX &var, casadi_int order, bool tr) {
     return _which_depends(expr, var, order, tr);
   }
 
@@ -1016,7 +1017,8 @@ namespace casadi {
   }
 
   template<>
-  void CASADI_EXPORT SX::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT SX::to_file(const std::string& filename,
+      const std::string& format_hint) const {
     casadi_error("Not implemented");
   }
 

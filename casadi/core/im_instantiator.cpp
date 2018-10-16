@@ -42,7 +42,8 @@ namespace casadi {
     return {{"sparsity", sparsity().info()}, {"data", nonzeros()}};
   }
   template<>
-  void CASADI_EXPORT IM::to_file(const std::string& filename, const std::string& format_hint) const {
+  void CASADI_EXPORT IM::to_file(const std::string& filename,
+      const std::string& format_hint) const {
     casadi_error("Not implemented");
   }
 
