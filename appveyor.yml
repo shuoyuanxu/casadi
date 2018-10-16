@@ -2,9 +2,12 @@ branches:
   except:
     - /.*travis.*/
 environment:
-  msversion: 14
-  msversion: 15
-  
+  matrix:
+    - msversion: 14
+      image : Visual Studio 2015
+    - msversion: 15
+      image : Visual Studio 2017
+ 
 build_script:
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
   - cmake "-GVisual Studio %msversion% Win64" -H. -B_builds
