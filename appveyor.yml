@@ -23,5 +23,5 @@ build_script:
   - echo %generator%
   - call "C:\Program Files (x86)\Microsoft Visual Studio\%vsyear%\Community\VC\Auxiliary\Build\vcvars%bitness%.bat"
   - set CXXFLAGS="-D_CRT_SECURE_NO_WARNINGS"
-  - cmake "-G %generator%" -H. -B_builds
+  - cmake "-G%generator%" -H. -B_builds
   - cmake --build _builds
