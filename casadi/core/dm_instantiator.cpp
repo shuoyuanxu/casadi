@@ -29,6 +29,7 @@ using namespace std;
 
 namespace casadi {
 
+
   template<>
   Matrix<double> Matrix<double>::
   solve(const Matrix<double>& A, const Matrix<double>& b,

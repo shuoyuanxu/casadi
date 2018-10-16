@@ -25,6 +25,8 @@
 #define CASADI_SX_INSTANTIATOR_CPP
 #include "matrix_impl.hpp"
 
+#include "sx_function.hpp"
+
 using namespace std;
 
 namespace casadi {

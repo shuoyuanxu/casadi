@@ -29,7 +29,6 @@
 #include "im_decl.hpp"
 #include "sx_decl.hpp"
 
-#include "sx_function.hpp"
 #include "sx_node.hpp"
 #include "linsol.hpp"
 #include "expm.hpp"
