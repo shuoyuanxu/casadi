@@ -66,10 +66,10 @@ namespace casadi {
   }
 
   ClangCompiler::~ClangCompiler() {
-    if (act_) delete act_;
-    if (myerr_) delete myerr_;
-    if (executionEngine_) delete executionEngine_;
-    if (context_) delete context_;
+    if (act_) delete act_; // NOLINT(readability-delete-null-pointer)
+    if (myerr_) delete myerr_; // NOLINT(readability-delete-null-pointer)
+    if (executionEngine_) delete executionEngine_; // NOLINT(readability-delete-null-pointer)
+    if (context_) delete context_; // NOLINT(readability-delete-null-pointer)
   }
 
   const Options ClangCompiler::options_
