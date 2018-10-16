@@ -31,23 +31,23 @@ namespace casadi {
 
 
   template<>
-  Matrix<double> Matrix<double>::
-  solve(const Matrix<double>& A, const Matrix<double>& b,
+  DM DM::
+  solve(const DM& A, const DM& b,
         const string& lsolver, const Dict& dict) {
     Linsol mysolver("tmp", lsolver, A.sparsity(), dict);
     return mysolver.solve(A, b, false);
   }
 
   template<>
-  Matrix<double> Matrix<double>::
-  inv(const Matrix<double>& A,
+  DM DM::
+  inv(const DM& A,
         const string& lsolver, const Dict& dict) {
     return solve(A, DM::eye(A.size1()), lsolver, dict);
   }
 
   template<>
-  Matrix<double> Matrix<double>::
-  pinv(const Matrix<double>& A, const string& lsolver,
+  DM DM::
+  pinv(const DM& A, const string& lsolver,
        const Dict& dict) {
     if (A.size1()>=A.size2()) {
       return solve(mtimes(A.T(), A), A.T(), lsolver, dict);
@@ -57,7 +57,7 @@ namespace casadi {
   }
 
   template<>
-  CASADI_EXPORT Matrix<double> Matrix<double>::
+  CASADI_EXPORT DM DM::
   rand(const Sparsity& sp) { // NOLINT(runtime/threadsafe_fn)
     // C++11 random number generator
     std::uniform_real_distribution<double> distribution(0., 1.);
@@ -65,19 +65,19 @@ namespace casadi {
     std::vector<double> nz(sp.nnz());
     for (double& e : nz) e = distribution(rng_);
     // Construct return object
-    return Matrix<double>(sp, nz, false);
+    return DM(sp, nz, false);
   }
 
   template<>
-  Matrix<double> Matrix<double>::
-  expm(const Matrix<double>& A) {
+  DM DM::
+  expm(const DM& A) {
     Function ret = expmsol("mysolver", "slicot", A.sparsity());
     return ret(std::vector<DM>{A, 1})[0];
   }
 
   template<>
-  Matrix<double> Matrix<double>::
-  expm_const(const Matrix<double>& A, const Matrix<double>& t) {
+  DM DM::
+  expm_const(const DM& A, const DM& t) {
     return expm(A*t);
   }
 
