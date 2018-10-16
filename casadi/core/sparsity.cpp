@@ -25,7 +25,7 @@
 
 
 #include "sparsity_internal.hpp"
-#include "im_decl.hpp"
+#include "im.hpp"
 #include "casadi_misc.hpp"
 #include "sparse_storage_impl.hpp"
 #include "serializing_stream.hpp"

@@ -36,9 +36,9 @@
 #include "casadi_meta.hpp"
 
 // Matrices
-#include "sx_decl.hpp"
-#include "dm_decl.hpp"
-#include "im_decl.hpp"
+#include "sx.hpp"
+#include "dm.hpp"
+#include "im.hpp"
 
 // Matrix expressions
 #include "mx.hpp"

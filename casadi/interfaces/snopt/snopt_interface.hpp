@@ -27,7 +27,7 @@
 #define CASADI_SNOPT_INTERFACE_HPP
 
 #include "casadi/core/nlpsol_impl.hpp"
-#include "casadi/core/im_decl.hpp"
+#include "casadi/core/im.hpp"
 
 #include "casadi/interfaces/snopt/casadi_nlpsol_snopt_export.h"
 extern "C" {

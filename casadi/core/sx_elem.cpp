@@ -24,7 +24,7 @@
 
 
 #include "sx_elem.hpp"
-#include "sx_decl.hpp"
+#include "sx.hpp"
 #include <stack>
 #include <cassert>
 #include "calculus.hpp"

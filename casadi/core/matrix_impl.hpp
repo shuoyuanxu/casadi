@@ -25,9 +25,9 @@
 #ifndef CASADI_MATRIX_IMPL_HPP
 #define CASADI_MATRIX_IMPL_HPP
 
-#include "dm_decl.hpp"
-#include "im_decl.hpp"
-#include "sx_decl.hpp"
+#include "dm.hpp"
+#include "im.hpp"
+#include "sx.hpp"
 
 #include "sx_node.hpp"
 #include "linsol.hpp"

@@ -25,15 +25,14 @@ set(CASADI_PUBLIC
   # Template class Matrix<>, implements a sparse Matrix with col compressed storage, designed to work well with symbolic data types (SX)
   generic_expression.hpp      # Base class for SXElem MX and Matrix<>
   generic_matrix.hpp          # Base class for Matrix<> and MX
-  matrix.hpp                  # The Matrix template class
   matrix_fwd.hpp
   matrix_decl.hpp
   sx_fwd.hpp
-  sx_decl.hpp
+  sx.hpp
   dm_fwd.hpp
-  dm_decl.hpp
+  dm.hpp
   im_fwd.hpp
-  im_decl.hpp
+  im.hpp
   sparsity_interface.hpp
   sparsity.hpp                # reference counted sparsity pattern
   slice.hpp                   # A "slice" in a language such as Python, A[start:stop:step], or Matlab, A(start:step:stop)

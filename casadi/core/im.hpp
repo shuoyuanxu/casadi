@@ -22,55 +22,30 @@
  *
  */
 
-#ifndef CASADI_DM_DECL_HPP
-#define CASADI_DM_DECL_HPP
+#ifndef CASADI_IM_HPP
+#define CASADI_IM_HPP
 
-#include "dm_fwd.hpp"
+#include "im_fwd.hpp"
 #include "matrix_decl.hpp"
 
 namespace casadi {
 
+  /// Is the IM a Slice
+  bool CASADI_EXPORT is_slice(const IM& x, bool ind1=false);
+
+  ///  Convert IM to Slice
+  Slice CASADI_EXPORT to_slice(const IM& x, bool ind1=false);
 
   template<>
-  DM DM::
-  solve(const DM& A, const DM& b,
-        const std::string& lsolver, const Dict& dict);
-
+  Dict CASADI_EXPORT IM::info() const;
   template<>
-  DM DM::
-  inv(const DM& A,
-        const std::string& lsolver, const Dict& dict);
-  template<>
-  DM DM::
-  pinv(const DM& A, const std::string& lsolver,
-       const Dict& dict);
-
-  template<>
-  CASADI_EXPORT DM DM::
-  rand(const Sparsity& sp); // NOLINT(runtime/threadsafe_fn)
-
-  template<>
-  DM DM::
-  expm(const DM& A);
-
-  template<>
-  DM DM::
-  expm_const(const DM& A, const DM& t);
-
-  template<> void DM::export_code(const std::string& lang,
-       std::ostream &stream, const Dict& options) const;
-
-  template<>
-  Dict CASADI_EXPORT DM::info() const;
-
-  template<>
-  void CASADI_EXPORT DM::to_file(const std::string& filename,
+  void CASADI_EXPORT IM::to_file(const std::string& filename,
     const std::string& format_hint) const;
 
-#ifndef CASADI_DM_INSTANTIATOR_CPP
-  extern template class Matrix<double>;
-#endif // CASADI_DM_INSTANTIATOR_CPP
+#ifndef CASADI_IM_INSTANTIATOR_CPP
+  extern template class Matrix<casadi_int>;
+#endif // CASADI_IM_INSTANTIATOR_CPP
 
 } // namespace casadi
 
-#endif // CASADI_DM_DECL_HPP
+#endif // CASADI_IM_HPP

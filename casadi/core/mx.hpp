@@ -28,7 +28,7 @@
 #include "shared_object.hpp"
 #include "matrix_fwd.hpp"
 #include "sx_fwd.hpp"
-#include "dm_decl.hpp"
+#include "dm.hpp"
 #include "generic_matrix.hpp"
 #include "generic_expression.hpp"
 #include "generic_type.hpp"
