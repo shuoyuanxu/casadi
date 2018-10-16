@@ -32,16 +32,16 @@ namespace casadi {
 
 
   template<>
-  DM DM::
+  CASADI_EXPORT DM DM::
   solve(const DM& A, const DM& b,
         const std::string& lsolver, const Dict& dict);
 
   template<>
-  DM DM::
+  CASADI_EXPORT DM DM::
   inv(const DM& A,
         const std::string& lsolver, const Dict& dict);
   template<>
-  DM DM::
+  CASADI_EXPORT DM DM::
   pinv(const DM& A, const std::string& lsolver,
        const Dict& dict);
 
@@ -50,11 +50,11 @@ namespace casadi {
   rand(const Sparsity& sp); // NOLINT(runtime/threadsafe_fn)
 
   template<>
-  DM DM::
+  CASADI_EXPORT DM DM::
   expm(const DM& A);
 
   template<>
-  DM DM::
+  CASADI_EXPORT DM DM::
   expm_const(const DM& A, const DM& t);
 
   template<> void DM::export_code(const std::string& lang,
